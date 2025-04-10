@@ -17,7 +17,9 @@
     "next-sanity": "^9.9.9",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.55.0",
     "sanity": "^3.83.0",
+    "slugify": "^1.6.6",
     "styled-components": "^6.1.17"
   },
   "devDependencies": {
