@@ -73,7 +73,7 @@ import { defineType } from 'sanity'
     // Asking price of the car in PKR
     {
       name: 'price',
-      title: 'Price (PKR)',
+      title: 'Price ',
       type: 'number',
       validation: Rule => Rule.required(),
     },
