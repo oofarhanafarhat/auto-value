@@ -1,51 +1,65 @@
-// import { NextResponse } from 'next/server';
-// // import { auth } from '@clerk/nextjs';
-// import { db } from '@/../lib/db';
-// import { cars } from 'drizzle-orm/vercel-postgres'; // your Drizzle car table schema
-// import { eq } from 'drizzle-orm';
+import { NextResponse } from 'next/server';
+import { db } from '@/../lib/db';
+import { cars } from '@/../lib/schema';
+import { z } from 'zod';
 
-// export async function POST(req: Request) {
-//   const { userId } = auth();
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const carSchema = z.object({
+      title: z.string().min(2),
+      make: z.string(),
+      model: z.string(),
+      year: z.number().min(1950).max(new Date().getFullYear()),
+      condition: z.enum(['New', 'Used', 'Like New', 'Old']),
+      mileage: z.number().min(0),
+      price: z.number().min(10000),
+      description: z.string().optional(),
+    });
+    const parsed = carSchema.safeParse(body);
 
-//   if (!userId) {
-//     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-//   }
+if (!parsed.success) {
+  return NextResponse.json({ error: parsed.error.format() }, { status: 400 });
+}
 
-//   try {
-//     const body = await req.json();
-//     const {
-//       title,
-//       slug,
-//       make,
-//       model,
-//       year,
-//       condition,
-//       mileage,
-//       price,
-//       description,
-//       image,
-//     } = body;
+const {
+  title,
+  make,
+  model,
+  year,
+  condition,
+  mileage,
+  price,
+  description,
+} = parsed.data;
 
-//     // Optional: Custom estimate logic could go here
 
-//     const result = await db.insert(cars).values({
-//       title,
-//       slug,
-//       make,
-//       model,
-//       year,
-//       condition,
-//       mileage,
-//       price,
-//       description,
-//       image,
-//       userId,
-//     });
+    // Estimate logic (simple demo logic)
+    let estimatedValue = price;
+    const currentYear = new Date().getFullYear();
+    const age = currentYear - year;
 
-//     return NextResponse.json({ message: 'Valuation saved successfully', result }, { status: 201 });
+    if (condition === 'Used') estimatedValue -= 50000;
+    if (condition === 'Old') estimatedValue -= 100000;
+    if (age > 5) estimatedValue -= age * 10000;
+    if (mileage > 100000) estimatedValue -= 50000;
 
-//   } catch (error) {
-//     console.error('[VALUATION_POST_ERROR]', error);
-//     return NextResponse.json({ error: 'Failed to save valuation' }, { status: 500 });
-//   }
-// }
+    // Store in DB using Drizzle
+    await db.insert(cars).values({
+      title,
+      make,
+      model,
+      year,
+      condition,
+      mileage,
+      price,
+      description,
+      estimatedValue,
+    });
+
+    return NextResponse.json({ estimatedValue });
+  } catch (error) {
+    console.error('Valuation API Error:', error);
+    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
+  }
+}

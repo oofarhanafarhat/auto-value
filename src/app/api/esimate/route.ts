@@ -1,60 +1,73 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/../lib/db'
-import { valuations } from "@/../lib/schema"
+import { NextRequest, NextResponse } from 'next/server' // ✅ Import Next.js API request/response utilities
+import { db } from '@/../lib/db' // ✅ Import Drizzle database instance
+import { auto } from '@/../lib/schema' // ✅ Import 'valuations' schema from valuation.
+import { z } from 'zod' // ✅ Import Zod for data validation
 
+// ✅ Define form validation schema using Zod
+const valuationSchema = z.object({
+  userId: z.string(), // Clerk user ID must be a string
+  make: z.string(), // Car make (e.g., Honda, Toyota)
+  model: z.string(), // Car model (e.g., Civic, Corolla)
+  year: z.number(), // Manufacturing year must be a number
+  mileage: z.number(), // Mileage must be a number
+  condition: z.enum(['Excellent', 'Used', 'Old']), // Only allow specific condition values
+})
 
-// Car valuation estimate function (basic example)
-const calculateEstimate = (mileage: number, year: number, condition: string) => {
-  let basePrice = 1000000; // Starting price (example)
+// ✅ Estimate value calculator function
+const calculateEstimate = (mileage:number, year: number, condition: string) => {
+  let basePrice = 1000000 // Starting price of any car
 
-  // Modify price based on car condition
   if (condition === 'Used') {
-    basePrice -= 100000;
+    basePrice -= 100000 // Subtract if condition is 'Used'
   } else if (condition === 'Old') {
-    basePrice -= 200000;
+    basePrice -= 200000 // Subtract more if condition is 'Old'
   }
 
-  // Reduce price based on mileage
-  basePrice -= (mileage / 1000) * 5000;
+  basePrice -= (mileage / 1000) * 5000 // Subtract based on mileage
+  const ageFactor = new Date().getFullYear() - year // Calculate car age
+  basePrice -= ageFactor * 20000 // Subtract based on age
 
-  // Further adjust based on car's year
-  const ageFactor = new Date().getFullYear() - year;
-  basePrice -= ageFactor * 20000;
-
-  return basePrice;
+  return Math.max(basePrice, 100000) // Ensure minimum value of 100000
 }
 
+// ✅ POST API endpoint for car valuation
 export async function POST(req: NextRequest) {
-    try {
-        const body = await req.json()
-        const { userId, make, model, year, mileage, condition } = body
-        
+  try {
+    const body = await req.json() // ✅ Parse incoming request body
+
+    // ✅ Validate input using Zod
+    const result = valuationSchema.safeParse(body)
+    if (!result.success) {
+      return NextResponse.json(
+        { message: 'Validation failed', error: result.error.format() }, // ✅ Return error if validation fails
+        { status: 400 }
+      )
+    }
+
+    const { userId, make, model, year, mileage, condition } = result.data // ✅ Destructure validated data
+
+    const estimatedPrice = calculateEstimate(mileage, year, condition) // ✅ Call estimate function
+
+    await db.insert(auto).values({
+      make: 'Toyota',
+      model: 'Corolla',
+      year: 2018,
+      mileage: 50000,
+      condition: 'Used',
+      estimatedPrice: 1450000,
+    });
     
-        // Calculate estimate
-        const estimatedPrice = calculateEstimate(mileage, year, condition)
-    
-        // Save the valuation to the database
-        await db.insert(valuations).values({
-          userId,
-          make,
-          model,
-          year,
-          mileage,
-          condition,
-          estimatedPrice
-        })
-    
-        // Return response with estimated price
-        return NextResponse.json({
-          message: 'Valuation calculated and saved successfully!',
-          estimatedPrice
-        })
-      } catch (error:any) {
-        console.error('Error in valuation API:', error)
-        return NextResponse.json({
-            message: 'Error calculating valuation.',
-            error: error.message
-          }, { status: 500 })
-        }
-      }
-      
+
+    // ✅ Return success response with calculated estimate
+    return NextResponse.json({
+      message: 'Valuation saved successfully',
+      estimatedPrice,
+    })
+  } catch (error: any) {
+    console.error('Valuation API Error:', error) // ✅ Log error to server
+    return NextResponse.json(
+      { message: 'Server error', error: error.message }, // ✅ Return 500 server error response
+      { status: 500 }
+    )
+  }
+}
