@@ -1,5 +1,4 @@
 'use client';
-
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
@@ -32,10 +31,15 @@ export default function ValuationPage() {
       });
 
       const result = await res.json();
+      
+console.log('Result from API:', result);
+
 
       if (res.ok) {
-        setMessage(`Estimated Value: PKR ${result.estimatedValue}`);
-        reset();
+        setMessage(`Estimated Value:  ${result.estimatedPrice}`);
+
+
+        // reset();
       } else {
         setMessage('Failed to submit car!');
       }
@@ -74,7 +78,7 @@ export default function ValuationPage() {
           <option value="Like New">Like New</option>
           <option value="Old">Old</option>
         </select>
-        {errors.condition && <p className="text-red-500">Condition is required</p>}
+        {errors.condition && <p className="text-red-500 bg-gray-300">Condition is required</p>}
 
         {/* Mileage */}
         <input type="number" {...register('mileage', { required: true })} placeholder="Mileage (KM)" className="w-full p-2 border rounded" />
