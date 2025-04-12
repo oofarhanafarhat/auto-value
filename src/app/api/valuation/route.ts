@@ -1,5 +1,4 @@
 
-
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/sanity/lib/db'
 import { auto } from '@/sanity/lib/drizzle' // your schema file with the "auto" table
