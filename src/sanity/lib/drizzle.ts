@@ -16,4 +16,4 @@ export const auto = pgTable('auto', {
   createdAt: timestamp('created_at', {                 // Timestamp for records
     withTimezone: true
   }).defaultNow(),
-});,
+});

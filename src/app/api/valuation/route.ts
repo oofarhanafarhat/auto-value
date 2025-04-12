@@ -1,65 +1,56 @@
-import { NextResponse } from 'next/server';
-import { db } from '@/../lib/db';
-import { cars } from '@/../lib/schema';
-import { z } from 'zod';
 
-export async function POST(req: Request) {
-  try {
-    const body = await req.json();
-    const carSchema = z.object({
-      title: z.string().min(2),
-      make: z.string(),
-      model: z.string(),
-      year: z.number().min(1950).max(new Date().getFullYear()),
-      condition: z.enum(['New', 'Used', 'Like New', 'Old']),
-      mileage: z.number().min(0),
-      price: z.number().min(10000),
-      description: z.string().optional(),
-    });
-    const parsed = carSchema.safeParse(body);
 
-if (!parsed.success) {
-  return NextResponse.json({ error: parsed.error.format() }, { status: 400 });
+import { NextRequest, NextResponse } from 'next/server'
+import { db } from '@/sanity/lib/db'
+import { auto } from '@/sanity/lib/drizzle' // your schema file with the "auto" table
+
+// Estimate calculation logic (reuse)
+const calculateEstimate = (mileage: number, year: number, condition: string) => {
+  let basePrice = 1000000
+
+  if (condition === 'Used') basePrice -= 100000
+  else if (condition === 'Old') basePrice -= 200000
+
+  basePrice -= (mileage / 1000) * 5000
+
+  const ageFactor = new Date().getFullYear() - year
+  basePrice -= ageFactor * 20000
+
+  return basePrice
 }
 
-const {
-  title,
-  make,
-  model,
-  year,
-  condition,
-  mileage,
-  price,
-  description,
-} = parsed.data;
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json()
+    const { make, model, year, mileage, condition } = body
 
+    const estimatedPrice = calculateEstimate(mileage, year, condition)
 
-    // Estimate logic (simple demo logic)
-    let estimatedValue = price;
-    const currentYear = new Date().getFullYear();
-    const age = currentYear - year;
-
-    if (condition === 'Used') estimatedValue -= 50000;
-    if (condition === 'Old') estimatedValue -= 100000;
-    if (age > 5) estimatedValue -= age * 10000;
-    if (mileage > 100000) estimatedValue -= 50000;
-
-    // Store in DB using Drizzle
-    await db.insert(cars).values({
-      title,
+    await db.insert(auto).values({
+      title: `${make} ${model}`, // Basic title
       make,
       model,
       year,
-      condition,
       mileage,
-      price,
-      description,
-      estimatedValue,
-    });
+      condition,
+      price: estimatedPrice, // Or set actual price if different
+      estimatedPrice,
+      createdAt: new Date(), // Optional if defaultNow() works
+      description: `Auto-generated estimate for ${make} ${model}` // Optional
+    })
 
-    return NextResponse.json({ estimatedValue });
-  } catch (error) {
-    console.error('Valuation API Error:', error);
-    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
+    return NextResponse.json({
+      message: 'Valuation saved successfully!',
+      estimatedPrice,
+    })
+  } catch (error: any) {
+    console.error('Error in valuation API:', error)
+    return NextResponse.json(
+      {
+        message: 'Error saving valuation.',
+        error: error.message,
+      },
+      { status: 500 }
+    )
   }
 }
