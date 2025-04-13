@@ -1,89 +1,79 @@
-'use client';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { BiMobile } from 'react-icons/bi';
-import { FiMenu, FiX } from 'react-icons/fi'; // Menu and Close icons
+"use client";
+
+import Link from "next/link";
+import { useUser, SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isSignedIn } = useUser();
+  const router = useRouter();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handlePostAd = () => {
+    if (!isSignedIn) {
+      alert("Please sign in to post an ad.");
+    } else {
+      router.push("/post-ad");
+    }
+  };
 
   return (
-    <div className="bg-blue-950 text-gray-100">
-      {/* Top Section */}
-      <header className="flex flex-col lg:flex-row items-center justify-between p-6 border border-gray-100">
-        {/* Left Section */}
-        <div className="flex items-center justify-between w-full lg:w-auto">
-          <div className="flex items-center">
-            <BiMobile className="text-red-900 mr-2" />
-            <h3 className="text-gray-100">Download App Via SMS</h3>
-          </div>
-          <div className="lg:hidden">
+    <nav className="bg-white shadow-md">
+      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <div className="text-xl font-bold text-gray-800">
+          <Link href="/">PakWheels</Link>
+        </div>
+
+        {/* Navigation Links */}
+        <div className="hidden md:flex space-x-4">
+          <Link href="/cars" className="text-gray-700 hover:text-blue-600">Cars</Link>
+          <Link href="/bikes" className="text-gray-700 hover:text-blue-600">Bikes</Link>
+          <Link href="/parts" className="text-gray-700 hover:text-blue-600">Parts</Link>
+
+          {/* More Dropdown */}
+          <div className="relative">
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-100 focus:outline-none"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="text-gray-700 hover:text-blue-600 focus:outline-none"
             >
-              {isOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
+              More
             </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-10">
+                <Link href="/about-us" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">About Us</Link>
+                <Link href="/contact" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Contact</Link>
+                <Link href="/terms" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Terms & Conditions</Link>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Right Section */}
-        <div className="hidden lg:flex space-x-6">
-          <h3 className="text-red-600">اُردو</h3>
-          <button className="border-l-2 border-gray-500 pl-3">Sign In</button>
-          <button className="border-l-2 border-gray-500 pl-3">Sign Up</button>
-        </div>
-      </header>
-
-      {/* Navbar Links */}
-      <nav className="lg:flex justify-center items-center p-4">
-     
-        {/* Desktop Menu */}
-        <ul className="hidden lg:flex space-x-6 ">
-          <li>UsedCars</li>
-          <li>NewCars</li>
-          <li>Bikes</li>
-          <li>AutoStore</li>
-          <li>Vedeos</li>
-          <li>Forms</li>
-          <li>Blogs</li>
-          <li>More</li>
-        </ul>
-        <button className="hidden lg:block py-2 px-8 bg-red-800 text-white ml-44">
-          Post an Ad
-        </button>
-      </nav>
-
-      {/* Mobile Sidebar */}
-      <div
-        className={`lg:hidden fixed top-0 left-0 w-64 h-full bg-blue-950 text-gray-100 transform ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        } transition-transform duration-300 ease-in-out`}
-      >
-        <div className="flex flex-col p-4 space-y-4">
-          <Image
-            src="/logo.png"
-            width={150}
-            height={150}
-            alt="Logo"
-            className="bg-gray-800 opacity-60"
-          />
-          <ul className="space-y-4">
-            <li>UsedCars</li>
-            <li>NewCars</li>
-            <li>Bikes</li>
-            <li>AutoStore</li>
-            <li>Vedeos</li>
-            <li>Forms</li>
-            <li>Blogs</li>
-            <li>More</li>
-          </ul>
-          <button className="py-2 px-8 bg-red-800 text-white mt-4">
-            Post an Ad
+        {/* Right Side - Auth / Post Ad */}
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={handlePostAd}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Post Ad
           </button>
+
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="text-gray-700 hover:text-blue-600 py-2 px-2 border-gray-800 bg-gray-600">Sign In</button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Sign Up</button>
+            </SignUpButton>
+          </SignedOut>
+
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

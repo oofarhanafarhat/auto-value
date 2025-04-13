@@ -1,3 +1,4 @@
+// drizzle.ts
 import { pgTable, serial, text, integer, timestamp } from 'drizzle-orm/pg-core';
 
 

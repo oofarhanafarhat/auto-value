@@ -9,22 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.14.3",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.83.0",
     "@vercel/postgres": "^0.10.0",
     "drizzle-kit": "^0.30.6",
     "drizzle-orm": "^0.41.0",
-    "next": "14.2.2",
+    "next": "^15.2.0",
     "next-sanity": "^9.9.9",
+    "pg": "^8.14.1",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.55.0",
     "react-icons": "^5.5.0",
     "sanity": "^3.83.0",
     "slugify": "^1.6.6",
+    "sonner": "^2.0.3",
     "styled-components": "^6.1.17"
   },
   "devDependencies": {
+    "@types/next": "^9.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
