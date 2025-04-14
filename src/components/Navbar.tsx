@@ -19,7 +19,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-black text-white" >
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <div className="text-xl font-bold text-gray-800">
@@ -28,9 +28,9 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="hidden md:flex space-x-4">
-          <Link href="/cars" className="text-gray-700 hover:text-blue-600">Cars</Link>
-          <Link href="/bikes" className="text-gray-700 hover:text-blue-600">Bikes</Link>
-          <Link href="/parts" className="text-gray-700 hover:text-blue-600">Parts</Link>
+          <Link href="/cars" className=" hover:text-blue-600">Cars</Link>
+          <Link href="/bikes" className=" hover:text-blue-600">Bikes</Link>
+          <Link href="/parts" className=" hover:text-blue-600">Parts</Link>
 
           {/* More Dropdown */}
           <div className="relative">
@@ -42,9 +42,9 @@ const Navbar = () => {
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-10">
-                <Link href="/about-us" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">About Us</Link>
-                <Link href="/contact" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Contact</Link>
-                <Link href="/terms" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Terms & Conditions</Link>
+                <Link href="/about-us" className="block px-4 py-2">About Us</Link>
+                <Link href="/contact" className="block px-4 py-2 ">Contact</Link>
+                <Link href="/terms" className="block px-4 py-2 ">Terms & Conditions</Link>
               </div>
             )}
           </div>
@@ -60,11 +60,11 @@ const Navbar = () => {
           </button>
 
           <SignedOut>
-            <SignInButton mode="modal">
-              <button className="text-gray-700 hover:text-blue-600 py-2 px-2 border-gray-800 bg-gray-600">Sign In</button>
+            <SignInButton >
+              <button className=" py-2 px-2 border-gray-800 bg-gray-600">Sign In</button>
             </SignInButton>
-            <SignUpButton mode="modal">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Sign Up</button>
+            <SignUpButton >
+              <button className=" px-4 py-2 rounded hover:bg-blue-700">Sign Up</button>
             </SignUpButton>
           </SignedOut>
 

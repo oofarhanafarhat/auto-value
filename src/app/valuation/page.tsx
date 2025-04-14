@@ -31,14 +31,11 @@ export default function ValuationPage() {
       });
 
       const result = await res.json();
-      
-console.log('Result from API:', result);
 
+      console.log('Result from API:', result);
 
       if (res.ok) {
         setMessage(`Estimated Value:  ${result.estimatedPrice}`);
-
-
         // reset();
       } else {
         setMessage('Failed to submit car!');
@@ -50,7 +47,7 @@ console.log('Result from API:', result);
 
   return (
     <div className="max-w-3xl mx-auto mt-12 p-6 bg-white rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Get Your Car's Estimated Value</h2>
+      <h2 className="text-2xl font-bold mb-6">Get Your Car&apos;s Estimated Value</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
