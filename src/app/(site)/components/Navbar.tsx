@@ -11,6 +11,8 @@ export default function Navbar() {
       <Link href="/" className="text-xl font-bold">AutoValue</Link>
       <div className="flex items-center gap-4">
         <Link href="/valuation">Valuation</Link>
+        <Link href="/about">About</Link>
+        <Link href="/contact">Contact</Link>
 
         <SignedIn>
           <Link href="/listing">Listing</Link>
