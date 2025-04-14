@@ -1,5 +1,4 @@
-import SiteLayout from "./(site)/layout";
-import layout from "./(site)/layout";
+
 
 import ValuationPage from "./valuation/page";
 export default function Home() {
@@ -7,7 +6,7 @@ export default function Home() {
  <main>
    
      {/* Add your content here */}
-   <SiteLayout/>
+   
  </main>
   );
 }
