@@ -1,7 +1,7 @@
 // src/app/layout.tsx
 
 import './globals.css'
-import { ClerkProvider } from '@clerk/nextjs'
+
 import { Inter } from 'next/font/google'
 
 import Navbar from '@/components/Navbar'
@@ -15,7 +15,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
+    
       <html lang="en">
         <body className={inter.className}>
           <Navbar />
@@ -23,6 +23,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         
         </body>
       </html>
-    </ClerkProvider>
+  
   )
 }

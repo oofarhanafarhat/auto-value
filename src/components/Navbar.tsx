@@ -10,13 +10,13 @@ const Navbar = () => {
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handlePostAd = () => {
-    if (!isSignedIn) {
-      alert("Please sign in to post an ad.");
-    } else {
-      router.push("/post-ad");
-    }
-  };
+  // const handlePostAd = () => {
+  //   if (!isSignedIn) {
+  //     alert("Please sign in to post an ad.");
+  //   } else {
+  //     router.push("/post-ad");
+  //   }
+  // };
 
   return (
     <nav className="bg-black text-white" >
@@ -52,25 +52,27 @@ const Navbar = () => {
 
         {/* Right Side - Auth / Post Ad */}
         <div className="flex items-center space-x-4">
-          <button
+          {/* <button
             onClick={handlePostAd}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
             Post Ad
-          </button>
+          </button> */}
 
-          <SignedOut>
-            <SignInButton >
-              <button className=" py-2 px-2 border-gray-800 bg-gray-600">Sign In</button>
-            </SignInButton>
-            <SignUpButton >
-              <button className=" px-4 py-2 rounded hover:bg-blue-700">Sign Up</button>
-            </SignUpButton>
-          </SignedOut>
+<SignedIn>
+          <Link href="/listing">Listing</Link>
+          <Link href="/purchase">Purchase</Link>
+          <UserButton />
+        </SignedIn>
 
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button className="px-4 py-2 bg-blue-600 text-white rounded">
+              Sign In
+            </button>
+          </SignInButton>
+        </SignedOut>
+
         </div>
       </div>
     </nav>
