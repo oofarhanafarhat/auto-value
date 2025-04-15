@@ -1,12 +1,9 @@
+import LandingPage from "@/components/Landingpage"
 
-
-import ValuationPage from "./valuation/page";
 export default function Home() {
   return (
  <main>
-   
-     {/* Add your content here */}
-   
+   <LandingPage/>
  </main>
   );
 }

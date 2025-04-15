@@ -1,29 +1,28 @@
-// src/app/layout.tsx
-import { ClerkProvider } from "@clerk/nextjs";
-import './globals.css'
+// app/layout.tsx
 
-import { Inter } from 'next/font/google'
-
-import Navbar from '@/components/Navbar'
-
-const inter = Inter({ subsets: ['latin'] })
+import { ClerkProvider } from '@clerk/nextjs';
+import { ReactNode } from 'react';
+import './globals.css';
+import Navbar from '../components/Navbar';
 
 export const metadata = {
-  title: 'AutoValue',
-  description: 'Find your cars true worth',
-}
+  title: 'auto value',
+  description: 'With Clerk authentication',
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body>
           <Navbar />
           {children}
-
-        
         </body>
       </html>
     </ClerkProvider>
-  )
+  );
 }

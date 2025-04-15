@@ -2,7 +2,7 @@
 import type { Config } from "drizzle-kit";
 
 export default {
-  schema: "./src/sanity/lib/auto.ts", // make sure this is correct
+  schema: "./src/sanity/lib/schema.ts", // make sure this is correct
   out: "./drizzle/migrations",
   dialect: "postgresql",
 dbCredentials: {
