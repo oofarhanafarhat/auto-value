@@ -25,7 +25,7 @@ export default function LandingPage() {
           Welcome to AutoValue
         </h1>
         <p className="text-lg md:text-xl text-gray-200">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Discover your car's true worth with our smart valuation tools.
+          Lorem ipsum dolor sit amet consectetur adipiscing elit. Discover your cars true worth with our smart valuation tools.
         </p>
         <Link href="/valuation">
           <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-300">

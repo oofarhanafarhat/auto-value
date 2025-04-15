@@ -3,22 +3,22 @@
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const ListingPage = ({ params }: { params: { id: string } }) => {
-  const { user } = useUser();  // Clerk user to check if the user is authenticated
+  const { user } = useUser();
   const router = useRouter();
-  const { id } = params;  // Accessing the dynamic id directly from params
+  const { id } = params;
   const [carData, setCarData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (id) {
-      // Fetching car data when id is available
       fetch(`/api/listing?id=${id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            setCarData(data.data);  // Setting car data into state
+            setCarData(data.data);
           } else {
             alert("Car not found");
           }
@@ -41,7 +41,7 @@ const ListingPage = ({ params }: { params: { id: string } }) => {
 
   const handleAddToCart = async () => {
     if (!user) {
-      router.push("/sign-in");  // Redirect to sign-in page if not authenticated
+      router.push("/sign-in");
       return;
     }
 
@@ -51,7 +51,7 @@ const ListingPage = ({ params }: { params: { id: string } }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ carId: id }),  // Send car ID to the cart API
+        body: JSON.stringify({ carId: id }),
       });
 
       const data = await res.json();
@@ -68,9 +68,20 @@ const ListingPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-semibold">{carData.name} ({carData.model})</h1>
+      {/* eslint-disable-next-line react/no-unescaped-entities */}
+      <h1 className="text-3xl font-semibold">
+        {carData._id} ({carData.model})
+      </h1>
       <p className="text-xl text-gray-600">${carData.price}</p>
-      <img src={carData.imageUrl} alt={carData.name} className="w-full h-64 object-cover mt-4 rounded-lg" />
+
+      <div className="w-full h-64 mt-4 relative rounded-lg overflow-hidden">
+        <Image
+          src={carData.imageUrl}
+          alt={carData.name}
+          fill
+          className="object-cover"
+        />
+      </div>
 
       <div className="mt-4">
         <button

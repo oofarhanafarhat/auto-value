@@ -27,7 +27,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <ul className="hidden md:flex space-x-6 items-center">
           <li><Link href="/" className="hover:text-blue-500 font-medium">Home</Link></li>
-          {/* <li><Link href="/listing" className="hover:text-blue-500 font-medium">Listings</Link></li> */}
+          <li><Link href="/listing" className="hover:text-blue-500 font-medium">Listings</Link></li>
           <li><Link href="/valuation" className="hover:text-blue-500 font-medium">valuation</Link></li>
 
           {/* Show Sign In / Sign Out based on auth */}

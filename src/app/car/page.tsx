@@ -1,10 +1,9 @@
-// Commit: Add 'Add to Cart' button in listings UI and connect it to /api/cart
-
 "use client";
 
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Image from "next/image"; // Importing Next.js Image component
 
 interface ListingCardProps {
   id: string;
@@ -14,13 +13,13 @@ interface ListingCardProps {
 }
 
 const ListingCard = ({ id, title, price, imageUrl }: ListingCardProps) => {
-  const { user } = useUser(); // Clerk user
+  const { user } = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const handleAddToCart = async () => {
     if (!user) {
-      router.push("/sign-in"); // redirect if not signed in
+      router.push("/sign-in");
       return;
     }
 
@@ -50,7 +49,17 @@ const ListingCard = ({ id, title, price, imageUrl }: ListingCardProps) => {
 
   return (
     <div className="border rounded-xl p-4 shadow-md hover:shadow-lg transition bg-white space-y-2">
-      <img src={imageUrl} alt={title} className="w-full h-48 object-cover rounded-lg" />
+      {/* Using Next.js Image component for optimization */}
+      <div className="w-full h-48 relative rounded-lg overflow-hidden">
+        <Image
+          src={imageUrl}
+          alt={title}
+          layout="fill"       // Ensures the image fills its container
+          objectFit="cover"   // Makes the image cover the space
+          className="rounded-lg"
+        />
+      </div>
+      
       <h2 className="text-xl font-semibold">{title}</h2>
       <p className="text-gray-600">${price}</p>
 
