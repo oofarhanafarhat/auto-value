@@ -1,5 +1,4 @@
 'use client';
-
 /* Import required packages and components */
 import Link from 'next/link';
 import { useUser, SignOutButton } from '@clerk/nextjs';
@@ -27,10 +26,10 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <ul className="hidden md:flex space-x-6 items-center">
           <li><Link href="/" className="hover:text-blue-500 font-medium">Home</Link></li>
-          <li><Link href="/listing" className="hover:text-blue-500 font-medium">Listings</Link></li>
+          {/* <li><Link href="/listing" className="hover:text-blue-500 font-medium">Listings</Link></li> */}
           <li><Link href="/valuation" className="hover:text-blue-500 font-medium">valuation</Link></li>
 
-          {/* Show Sign In / Sign Out based on auth */}
+          {/* Show Sign In / Sign Out based on auth status */}
           {user ? (
             <>
               <li><Link href="/dashboard" className="font-semibold">{user.firstName}</Link></li>
@@ -54,7 +53,7 @@ const Navbar = () => {
       {menuOpen && (
         <div className="md:hidden bg-white px-4 pt-4 pb-6 space-y-4 shadow-lg">
           <Link href="/" className="block font-medium hover:text-blue-500">Home</Link>
-          <Link href="/listing" className="block font-medium hover:text-blue-500">Listings</Link>
+          {/* <Link href="/listing" className="block font-medium hover:text-blue-500">Listings</Link> */}
           <Link href="/support" className="block font-medium hover:text-blue-500">Support</Link>
 
           {user ? (
