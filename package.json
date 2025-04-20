@@ -6,14 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.14.3",
+    "@sanity/client": "^6.29.0",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.83.0",
     "@vercel/postgres": "^0.10.0",
-    "drizzle-kit": "^0.30.6",
     "drizzle-orm": "^0.41.0",
     "next": "^15.2.0",
     "next-sanity": "^9.9.9",
@@ -33,6 +35,8 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "dotenv-cli": "^8.0.0",
+    "drizzle-kit": "^0.31.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.2",
     "postcss": "^8",

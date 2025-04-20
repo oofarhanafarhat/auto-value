@@ -13,7 +13,7 @@ export default function LandingPage() {
         backgroundImage: "url('./bg1.jpg')",
       }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-60" />
+      <div className="absolute inset-0 bg-[#0C2340] bg-opacity-60" />
       
       <motion.div
         className="relative z-10 max-w-3xl text-center text-white space-y-6"
@@ -28,7 +28,7 @@ export default function LandingPage() {
           Lorem ipsum dolor sit amet consectetur adipiscing elit. Discover your cars true worth with our smart valuation tools.
         </p>
         <Link href="/valuation">
-          <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-300">
+          <button className="mt-4 bg-[#0C2340] hover:bg-gray-300 text-white hover:text-[#0C2340] font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-300">
             Get Your Car Valued
           </button>
         </Link>
