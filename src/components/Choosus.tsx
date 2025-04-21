@@ -8,7 +8,7 @@ export const Choosus = () => {
     },
     {
       title: 'Seamless Experience',
-      desc: 'From listing to lead capture – enjoy a smooth and intuitive experience at every step.',
+      desc: 'From listing to lead capture  enjoy a smooth and intuitive experience at every step.',
     },
     {
       title: 'Mobile First',

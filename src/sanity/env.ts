@@ -1,20 +1,16 @@
-export const apiVersion =
-  process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-04-10'
+import { defineConfig } from "drizzle-kit";
+import * as dotenv from "dotenv";
 
-export const dataset = assertValue(
-  process.env.NEXT_PUBLIC_SANITY_DATASET,
-  'Missing environment variable: NEXT_PUBLIC_SANITY_DATASET'
-)
+dotenv.config({ path: ".env.local" }); // 👈 load your environment variables
 
-export const projectId = assertValue(
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  'Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID'
-)
-
-function assertValue<T>(v: T | undefined, errorMessage: string): T {
-  if (v === undefined) {
-    throw new Error(errorMessage)
-  }
-
-  return v
-}
+export default defineConfig({
+  schema: "./src/sanity/lib/schema.ts",
+  out: "./drizzle",
+  dialect: "postgresql",
+  dbCredentials: {
+    host: process.env.DB_HOST!,
+    database: process.env.DB_NAME!,
+    user: process.env.DB_USER!,
+    password: process.env.DB_PASSWORD!,
+  },
+});

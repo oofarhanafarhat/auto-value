@@ -1,14 +1,21 @@
-// drizzle.config.js
+import * as dotenv from "dotenv";
+import { defineConfig } from "drizzle-kit";
 
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-import * as schema from "./src/sanity/lib/schema"; // Apni schema file ka path yahan den
+// Load environment variables
+dotenv.config({ path: ".env.local" });
 
-export default {
-  schema: "./src/sanity/lib/schema", // yahan apna schema file ka relative path dein
-  out: "./drizzle/migrations", // migration files ka folder
-  driver: "pg", // PostgreSQL use kar rahe hain
+if (!process.env.DATABASE_URL) {
+  throw new Error("❌ DATABASE_URL is missing from .env.local");
+}
+
+export default defineConfig({
+  schema: "./src/sanity/lib/schema.ts",
+  out: "./db.ts",
+  dialect: "postgresql",
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL, // .env file mein define karein
+    host: process.env.DB_HOST!,
+    database: process.env.DB_NAME!,
+    user: process.env.DB_USER!,
+    password: process.env.DB_PASSWORD!,
   },
-};
+});
