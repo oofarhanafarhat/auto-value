@@ -1,5 +1,17 @@
-// drizzle.ts
-import { pgTable, serial, text, integer, timestamp } from 'drizzle-orm/pg-core';
+
+
+import { pgTable, serial, text, integer, timestamp,uuid } from 'drizzle-orm/pg-core';
+
+export const cart = pgTable("cart", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  carId: text("car_id").notNull(),
+  userId: text("user_id").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+
+
+
 
 
 // Cars Table: Store user-submitted car details with estimated value

@@ -1,5 +1,5 @@
 import { type SchemaTypeDefinition } from 'sanity'
-import {car} from "../schemaTypes/car"
+import {car} from "@/sanity/schemaTypes/car"
 import { carListing } from '../schemaTypes/carListing'
 import { autovalue1 } from './autovalue1'
 import { usedCar } from '@/sanity/schemaTypes/uesdcar'

@@ -1,16 +1,5 @@
-import { defineConfig } from "drizzle-kit";
-import * as dotenv from "dotenv";
+// src/sanity/env.ts
 
-dotenv.config({ path: ".env.local" }); // 👈 load your environment variables
-
-export default defineConfig({
-  schema: "./src/sanity/lib/schema.ts",
-  out: "./drizzle",
-  dialect: "postgresql",
-  dbCredentials: {
-    host: process.env.DB_HOST!,
-    database: process.env.DB_NAME!,
-    user: process.env.DB_USER!,
-    password: process.env.DB_PASSWORD!,
-  },
-});
+export const apiVersion = '2023-11-01'; // or whatever your API version is
+export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
+export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'pekt3fbw'; // replace

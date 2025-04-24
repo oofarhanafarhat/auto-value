@@ -1,99 +1,76 @@
-// sanity/schemas/car.ts
 
-import { defineType } from 'sanity'
-
- export const car = defineType({
-  name: 'car',
-  title: 'Car',
-  type: 'document',
+import { defineType } from "sanity";
+export const car= defineType( {
+  name: "car",
+  title: "Car",
+  type: "document",
   fields: [
-    // Title of the car listing (e.g., "Toyota Corolla 2020")
     {
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: Rule => Rule.required(),
+      name: "name",
+      title: "Car Name",
+      type: "string",
     },
-
-    // Slug for the URL, generated from the title
     {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
+      name: "slug",
+      title: "Slug",
+      type: "slug",
       options: {
-        source: 'title',
+        source: "name",
         maxLength: 96,
       },
-      validation: Rule => Rule.required(),
     },
-
-    // Car manufacturer name (e.g., "Toyota")
     {
-      name: 'make',
-      title: 'Make',
-      type: 'string',
-      validation: Rule => Rule.required(),
+      name: "price",
+      title: "Price",
+      type: "string",
     },
-
-    // Car model name (e.g., "Corolla")
     {
-      name: 'model',
-      title: 'Model',
-      type: 'string',
-      validation: Rule => Rule.required(),
-    },
-
-    // Manufacturing year of the car
-    {
-      name: 'year',
-      title: 'Year',
-      type: 'number',
-      validation: Rule => Rule.required().min(1990).max(new Date().getFullYear()),
-    },
-
-    // Condition of the car (e.g., New, Used, etc.)
-    {
-      name: 'condition',
-      title: 'Condition',
-      type: 'string',
-      options: {
-        list: ['New', 'Used', 'Like New', 'Old'],
-        layout: 'radio',
-      },
-      validation: Rule => Rule.required(),
-    },
-
-    // Mileage of the car in kilometers
-    {
-      name: 'mileage',
-      title: 'Mileage (KM)',
-      type: 'number',
-    },
-
-    // Asking price of the car in PKR
-    {
-      name: 'price',
-      title: 'Price ',
-      type: 'number',
-      validation: Rule => Rule.required(),
-    },
-
-    // Detailed description of the car and its features
-    {
-      name: 'description',
-      title: 'Description',
-      type: 'text',
-    },
-
-    // Image of the car
-    {
-      name: 'image',
-      title: 'Image',
-      type: 'image',
+      name: "image",
+      title: "Main Image",
+      type: "image",
       options: {
         hotspot: true,
       },
     },
+    {
+      name: "description",
+      title: "Description",
+      type: "text",
+    },
+    {
+      name: "year",
+      title: "Model Year",
+      type: "string",
+    },
+    {
+      name: "mileage",
+      title: "Mileage",
+      type: "string",
+    },
+    {
+      name: "fuel",
+      title: "Fuel Type",
+      type: "string",
+      options: {
+        list: [
+          { title: "Petrol", value: "petrol" },
+          { title: "Diesel", value: "diesel" },
+          { title: "Hybrid", value: "hybrid" },
+          { title: "Electric", value: "electric" },
+        ],
+      },
+    },
+    {
+      name: "transmission",
+      title: "Transmission",
+      type: "string",
+      options: {
+        list: [
+          { title: "Automatic", value: "automatic" },
+          { title: "Manual", value: "manual" },
+          { title: "CVT", value: "cvt" },
+        ],
+      },
+    },
   ],
-})
-
+});

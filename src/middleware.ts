@@ -1,13 +1,14 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-// Only these routes will require sign-in
+// Only protect these routes
 const isProtectedRoute = createRouteMatcher([
-  '/listing/(.*)',      // e.g., /listing/abc123
-  '/purchase(.*)',      // e.g., /purchase/xyz456
+  "/cart(.*)",
+  "/api/cart(.*)",
+  "/submit-listing(.*)",
 ])
 
-export default clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) {
+export default clerkMiddleware(async (auth, request) => {
+  if (isProtectedRoute(request)) {
     await auth.protect()
   }
 })
