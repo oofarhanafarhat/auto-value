@@ -97,13 +97,13 @@ export default function ListingsPage() {
               <div className="flex gap-3 mt-4">
                 <Link
                   href={`/listings/${car.slug}`}
-                  className="px-3 py-2 text-sm rounded bg-gray-800 text-white hover:bg-blue-700"
+                  className="px-3 py-2 text-sm rounded bg-gray-800 text-white hover:bg-gray-500"
                 >
                   View Details
                 </Link>
                 <button
                   onClick={() => handleAddToCart(car._id)}
-                  className="px-3 py-2 text-sm rounded bg-gray-800 text-white hover:bg-gray-900"
+                  className="px-3 py-2 text-sm rounded bg-gray-800 text-white hover:bg-gray-500"
                 >
                   Add to Cart
                 </button>

@@ -40,39 +40,48 @@ export default async function CarDetailPage({
   if (!car) return notFound();
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-      <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-md">
-        <Image
-          src={car.imageUrl}
-          alt={car.name}
-          fill
-          className="object-cover"
-        />
-      </div>
-
-      <div className="mt-6">
-        <h1 className="text-4xl font-extrabold text-gray-800">{car.name}</h1>
-        <p className="text-lg text-gray-500 mt-2">
-          Year: <span className="font-medium">{car.year}</span> | Mileage:{" "}
-          <span className="font-medium">{car.mileage} km</span>
+    <div className="max-w-5xl mx-auto p-6 sm:p-8 bg-white shadow-xl rounded-3xl mt-10 space-y-8 transition-all duration-300">
+    {/* Car Image */}
+    <div className="relative w-full h-80 sm:h-[28rem] rounded-2xl overflow-hidden shadow-lg group">
+      <Image
+        src={car.imageUrl}
+        alt={car.name}
+        fill
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+    </div>
+  
+    {/* Car Title & Specs */}
+    <div className="space-y-4">
+      <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900">{car.name}</h1>
+      <div className="text-lg sm:text-xl text-gray-600 space-y-1">
+        <p>
+          <span className="font-semibold">Year:</span> {car.year} &nbsp;|&nbsp;
+          <span className="font-semibold">Mileage:</span> {car.mileage.toLocaleString()} km
         </p>
-        <p className="text-lg text-gray-500 mt-1">
-          Fuel: <span className="font-medium">{car.fuel}</span> | Transmission:{" "}
-          <span className="font-medium">{car.transmission}</span>
+        <p>
+          <span className="font-semibold">Fuel:</span> {car.fuel} &nbsp;|&nbsp;
+          <span className="font-semibold">Transmission:</span> {car.transmission}
         </p>
-      </div>
-
-      <div className="mt-6">
-        <h2 className="text-2xl font-semibold text-gray-700">Description</h2>
-        <p className="mt-4 text-gray-600 leading-relaxed">{car.description}</p>
-      </div>
-
-      <div className="mt-8 flex items-center justify-between">
-        <div className="text-3xl font-bold text-green-600">
-          Price: ${car.price}
-        </div>
-        <AddToCartButton carId={car._id} />
       </div>
     </div>
+  
+    {/* Description */}
+    <div>
+      <h2 className="text-2xl font-semibold text-gray-800">Description</h2>
+      <p className="mt-3 text-gray-700 leading-relaxed text-base sm:text-lg">
+        {car.description}
+      </p>
+    </div>
+  
+    {/* Price & Add to Cart */}
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="text-3xl sm:text-4xl font-bold text-green-600">
+        ${car.price.toLocaleString()}
+      </div>
+      <AddToCartButton carId={car._id} />
+    </div>
+  </div>
+  
   );
 }
