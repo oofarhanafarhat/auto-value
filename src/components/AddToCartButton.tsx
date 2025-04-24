@@ -39,7 +39,7 @@ export default function AddToCartButton({ carId }: Props) {
       className={`px-6 py-3 font-semibold rounded-lg shadow-md transition duration-300 ${
         loading
           ? "bg-gray-400 cursor-not-allowed"
-          : "bg-blue-600 text-white hover:bg-blue-700"
+          : "bg-gray-800 text-white hover:bg-gray-500"
       }`}
     >
       {loading ? "Adding..." : "Add to Cart"}
