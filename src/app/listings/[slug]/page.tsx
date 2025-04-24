@@ -2,14 +2,21 @@ import { client } from "@/sanity/lib/client"; // Sanity client
 import { notFound } from "next/navigation"; // Built-in 404 page
 import Image from "next/image";
 import AddToCartButton from "@/components/AddToCartButton"; // Import the Client Component
-
 type Props = {
   params: {
-    slug: string; // Dynamic route parameter for the car slug
+    slug: string;
   };
 };
 
-export default async function CarDetailPage({ params }: Props) {
+
+
+
+  export default async function CarDetailPage({
+    params,
+  }: {
+    params: { slug: string };
+  }) {
+  
   const slug = decodeURIComponent(params.slug); // Decode slug to handle spaces or special characters
 
   console.log("Slug parameter (decoded):", slug);

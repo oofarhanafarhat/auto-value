@@ -125,7 +125,7 @@ export default function CartPage() {
               <div className="flex justify-between items-center mt-4">
                 <Link
                   href={`/listings/${car.slug.current}`}
-                  className="text-blue-600 hover:underline text-sm"
+                  className="text-gray-800 font-bold hover:underline text-sm"
                 >
                   veiw details
                 </Link>
