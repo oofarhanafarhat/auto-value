@@ -1,7 +1,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/sanity/lib/db'
-import { auto } from '@/sanity/lib/auto' // your schema file with the "auto" table
+import { db } from '@/sanity/lib/db/db'
+import { auto } from '@/sanity/lib/db/schema' // your schema file with the "auto" table
 
 // Estimate calculation logic (reuse)
 const calculateEstimate = (mileage: number, year: number, condition: string) => {
