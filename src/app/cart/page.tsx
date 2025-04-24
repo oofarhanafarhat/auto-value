@@ -32,7 +32,6 @@ export default function CartPage() {
   const [loading, setLoading] = useState(true); // Show loading spinner
   const router = useRouter(); // For redirecting to sign-in page
 
-  // ---------------------- Load Cart on Page Load ----------------------
   useEffect(() => {
     if (!user) {
       router.push("/sign-in");
@@ -92,11 +91,10 @@ export default function CartPage() {
     }
   };
 
-  // ---------------------- UI States ----------------------
   if (loading) return <div className="p-6">Loading your cart...</div>;
   if (carData.length === 0) return <div className="p-6 text-lg">Your cart is empty.</div>;
 
-  // ---------------------- Render Cart ----------------------
+  
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>
