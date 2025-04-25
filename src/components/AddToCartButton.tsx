@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+
 type Props = {
   carId: string; // ID of the car to add to the cart
 };
@@ -12,6 +13,7 @@ export default function AddToCartButton({ carId }: Props) {
   const handleAddToCart = async () => {
     setLoading(true);
     try {
+     
       const res = await fetch(`/api/cart`, {
         method: "POST",
         headers: {

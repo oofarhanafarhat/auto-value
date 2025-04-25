@@ -76,13 +76,6 @@ export default function CartPage() {
       console.error("Error removing from cart:", error);
     }
   };
-
-
-
-
-
-
-
   if (loading) return <div className="p-6">Loading your cart...</div>;
   if (carData.length === 0)
     return <div className="p-6 text-lg">Your cart is empty.</div>;
