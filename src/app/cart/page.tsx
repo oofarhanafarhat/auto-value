@@ -77,14 +77,19 @@ export default function CartPage() {
     }
   };
 
-  const total = carData.map((car) => car.price).join("");
-  
+
+
+
 
 
 
   if (loading) return <div className="p-6">Loading your cart...</div>;
   if (carData.length === 0)
     return <div className="p-6 text-lg">Your cart is empty.</div>;
+  const total = carData.reduce((sum, car) => sum + car.price, 0); // 0 is initial value for total
+
+console.log("Total Price:", total);
+  
 
   return (
     <div className="p-6 max-w-7xl mx-auto grid lg:grid-cols-3 gap-10">
