@@ -1,25 +1,38 @@
 // src/app/listings/[slug]/page.tsx
 
-import { Metadata } from "next"; // for metadata
 import { client } from "@/sanity/lib/client";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import AddToCartButton from "@/components/AddToCartButton";
+import { Metadata } from "next";
 
-// Step 1: Type define karo for params
+// ✅ Define props interface
 interface CarDetailPageProps {
   params: {
     slug: string;
   };
 }
 
-// Step 2: Metadata generate karna (for SEO, titles)
-export async function generateMetadata({ params }: CarDetailPageProps): Promise<Metadata> {
+// ✅ Required for build time static paths
+export async function generateStaticParams() {
+  const query = `*[_type == "car"]{ "slug": slug.current }`;
+  const cars = await client.fetch(query);
+
+  return cars.map((car: { slug: string }) => ({
+    slug: car.slug,
+  }));
+}
+
+// ✅ Metadata generator that now works at build time
+export async function generateMetadata(
+  { params }: CarDetailPageProps
+): Promise<Metadata> {
   return {
     title: `Car Detail - ${decodeURIComponent(params.slug)}`,
-  } as Metadata;
+  };
 }
-// Step 3: Actual page component
+
+// ✅ Default page component (same as before)
 export default async function CarDetailPage({ params }: CarDetailPageProps) {
   const slug = decodeURIComponent(params.slug);
 
@@ -81,7 +94,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
       </div>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="text-3xl sm:text-4xl font-bold text-green-600">
+        <div className="text-3xl sm:text-4xl  text-gray-800 font-bold">
           ${car.price.toLocaleString()}
         </div>
         <AddToCartButton carId={car._id} />

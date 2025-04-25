@@ -91,7 +91,7 @@ export default function ListingsPage() {
 
             <div className="p-4">
               <h2 className="text-xl font-semibold text-[#0C2340]">{car.name}</h2>
-              <p className="text-green-600 font-medium mt-1">${car.price}</p>
+              <p className="text-gray-600 font-medium mt-1">${car.price}</p>
 
               {/* Buttons */}
               <div className="flex gap-3 mt-4">
