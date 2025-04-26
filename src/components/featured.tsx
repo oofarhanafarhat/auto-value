@@ -1,11 +1,13 @@
+
 "use client";
 
+// Importing necessary hooks and libraries
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { client } from "@/sanity/lib/client";
+import { client } from "@/sanity/lib/client"; // Import Sanity client
 
-
+// Defining the TypeScript type for a car listing
 type CarListing = {
   _id: string;
   name: string;
@@ -16,74 +18,96 @@ type CarListing = {
       url: string;
     };
   };
-  addToCart: boolean;
 };
 
+// Main FeaturedCars component
 const FeaturedCars = () => {
+  // State to hold fetched car listings
   const [cars, setCars] = useState<CarListing[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState<string | null>(null); // Error state
 
+  // useEffect hook to fetch featured cars from Sanity
   useEffect(() => {
     const fetchCars = async () => {
       try {
+        // GROQ query to get cars where 'addToCart' is true (featured cars)
         const query = `*[_type == "carListing" && addToCart == true]{
           _id,
           name,
           model,
           price,
-          image{asset->{url}},
-          addToCart
+          image {
+            asset -> {
+              url
+            }
+          }
         }`;
-        const data = await client.fetch(query);
-        setCars(data);
+
+        const data = await client.fetch(query); // Fetching data
+        setCars(data); // Setting data to state
+        setLoading(false); // Turn off loading once data is fetched
       } catch (err) {
-        setError("Failed to load cars.");
-        console.error("Sanity fetch error:", err);
-      } finally {
+        setError("Failed to load featured cars."); // Setting error message
         setLoading(false);
       }
     };
 
-    fetchCars();
+    fetchCars(); // Calling the fetch function
   }, []);
 
+  // If still loading, show a loading text
+  if (loading) {
+    return <p className="text-center py-10">Loading featured cars...</p>;
+  }
+
+  // If error occurred, show error message
+  if (error) {
+    return <p className="text-center text-red-500 py-10">{error}</p>;
+  }
+
   return (
-    <motion.section className="px-6 md:px-20 py-16 text-center bg-[#0C2340]">
-      <h2 className="text-3xl md:text-4xl font-bold mb-10 text-gray-50">Featured Cars</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className="text-red-500">{error}</p>
-      ) : (
-        <div className="grid md:grid-cols-3 gap-8">
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        {/* Section Heading */}
+        <motion.h2
+          className="text-3xl font-bold text-center mb-12"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Featured Cars
+        </motion.h2>
+
+        {/* Cars Grid */}
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {cars.map((car) => (
             <motion.div
               key={car._id}
-              whileHover={{ scale: 1.03 }}
-              className="rounded-2xl overflow-hidden shadow-lg bg-white text-[#0C2340] border"
+              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition"
+              whileHover={{ scale: 1.05 }}
             >
-              <div className="relative w-full h-52">
+              {/* Car Image */}
+              <div className="relative h-56 w-full">
                 <Image
-                  src={car.image?.asset?.url || "/fallback.jpg"}
+                  src={car.image.asset.url}
                   alt={car.name}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
-              <div className="p-5 text-left">
+
+              {/* Car Info */}
+              <div className="p-6">
                 <h3 className="text-xl font-semibold">{car.name}</h3>
-                <p className="text-md mb-3">${car.price.toLocaleString()}</p>
-                <button className="mt-2 px-4 py-2 bg-[#0C2340] text-white rounded hover:bg-opacity-90">
-                  add to cart
-                </button>
+                <p className="text-gray-600">{car.model}</p>
+                <p className="text-primary font-bold mt-2">${car.price.toLocaleString()}</p>
               </div>
             </motion.div>
           ))}
         </div>
-      )}
-    </motion.section>
+      </div>
+    </section>
   );
 };
 

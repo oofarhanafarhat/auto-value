@@ -1,44 +1,47 @@
-import React from 'react'
+// src/landing/components/ChooseUs.tsx
 
-export const Choosus = () => {
+"use client";
+
+import React from "react";
+
+export const ChooseUs = () => {
   const features = [
     {
-      title: 'Accuracy & Trust',
-      desc: 'We use verified data and AI to provide highly accurate valuations tailored to market trends.',
+      title: "Accuracy & Trust",
+      desc: "We use verified data and AI to provide highly accurate valuations tailored to market trends.",
     },
     {
-      title: 'Seamless Experience',
-      desc: 'From listing to lead capture  enjoy a smooth and intuitive experience at every step.',
+      title: "Seamless Experience",
+      desc: "From listing to lead capture, enjoy a smooth and intuitive experience at every step.",
     },
     {
-      title: 'Mobile First',
-      desc: 'Fully responsive layout ensures flawless performance on phones, tablets, and desktops.',
+      title: "Mobile First",
+      desc: "Fully responsive layout ensures flawless performance across all devices.",
     },
     {
-      title: 'Secure & Scalable',
-      desc: 'Built on modern tech for reliability, security, and the ability to grow as you do.',
+      title: "Secure & Scalable",
+      desc: "Built with modern technology for unmatched security and scalability.",
     },
-  ]
+  ];
 
   return (
-    <section className="py-20 px-6 md:px-16 lg:px-24 bg-gradient-to-br from-white via-gray-50 to-gray-100">
+    <section className="py-20 px-6 md:px-24 bg-white">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-[#0C2340] mb-14 leading-tight">
-          Why Choose <span className="text-[#0C2340]">AutoValue</span>?
+        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-[#0C2340] mb-16">
+          Why Choose <span className="text-primary">AutoValue</span>?
         </h2>
-
-        <div className="grid gap-8 sm:grid-cols-2">
+        <div className="grid gap-10 sm:grid-cols-2">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:translate-y-6 transition-transform duration-300 ease-in-out"
+              className="p-8 bg-gray-50 rounded-3xl border hover:shadow-lg transition-all"
             >
-              <h3 className="text-2xl font-semibold text-gray-800 mb-3">{feature.title}</h3>
-              <p className="text-gray-600 text-base leading-relaxed">{feature.desc}</p>
+              <h3 className="text-2xl font-bold mb-4 text-[#0C2340]">{feature.title}</h3>
+              <p className="text-gray-600">{feature.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
