@@ -97,7 +97,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
 
       {/* Price and Add to Cart Button */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="text-3xl sm:text-4xl font-bold text-green-600">
+        <div className="text-3xl sm:text-4xl font-bold text-gray-700">
           ${car.price.toLocaleString()}
         </div>
 
