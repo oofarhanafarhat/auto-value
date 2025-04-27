@@ -12,16 +12,8 @@ import Image from "next/image";
 // Add to cart functionality component
 import AddToCartButton from "@/components/AddToCartButton";
 
-// Define the expected props type using CarDetailPageProps
-// This helps prevent deployment issues where TypeScript cannot infer types
-type CarDetailPageProps = {
-  params: {
-    slug: string;
-  };
-};
-
 // Exporting the dynamic car detail page component
-export default async function CarDetailPage({ params }: CarDetailPageProps) {
+export default async function CarDetailPage({ params }: { params: { slug: string } }){
   // Safely decode the slug value or fallback to empty string
   const slug = decodeURIComponent(params.slug || "");
 
