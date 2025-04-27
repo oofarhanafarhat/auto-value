@@ -1,5 +1,4 @@
-// File: app/listing/[slug]/page.tsx
-
+export const dynamic = "force-dynamic";
 // Importing the configured Sanity client
 import { client } from "@/sanity/lib/client";
 
