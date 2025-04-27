@@ -129,7 +129,7 @@ export default function CartPage() {
             {/* [Commit] Car image */}
             <Image
               src={car.image ? urlFor(car.image).url() : "/fallback.jpg"}
-              alt={car.title}
+              alt={car.title || "Car Image"}
               width={200}
               height={150}
               className="rounded-xl object-cover w-full md:w-48 h-36"

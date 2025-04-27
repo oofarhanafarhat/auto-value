@@ -16,7 +16,7 @@ import AddToCartButton from "@/components/AddToCartButton";
 // This helps prevent deployment issues where TypeScript cannot infer types
 type CarDetailPageProps = {
   params: {
-    slug?: string; // Making it optional avoids type errors in production
+    slug: string;
   };
 };
 
