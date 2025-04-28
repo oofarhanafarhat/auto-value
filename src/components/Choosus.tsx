@@ -34,7 +34,7 @@ export const ChooseUs = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="p-8 bg-gray-50 rounded-3xl border hover:shadow-lg transition-all"
+              className="p-8 bg-gray-50 rounded-3xl border hover:shadow-2xl transition-transform hover:translate-y-4"
             >
               <h3 className="text-2xl font-bold mb-4 text-[#0C2340]">{feature.title}</h3>
               <p className="text-gray-600">{feature.desc}</p>

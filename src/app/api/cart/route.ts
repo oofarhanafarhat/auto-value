@@ -8,19 +8,19 @@ import { eq,and } from "drizzle-orm";
 
 // ---------------------- GET: Fetch user's cart ----------------------
 export async function GET() {
-  const { userId } = await auth(); // Get user from Clerk
-  if (!userId) return NextResponse.json([], { status: 401 }); // No user? Return empty
+  const { userId } = await auth();
+  if (!userId) return NextResponse.json([], { status: 401 }); // return empty array if not logged in
 
   try {
-    // Get all cart items for this user
     const userCart = await db.select().from(cart).where(eq(cart.userId, userId));
-
-    return NextResponse.json(userCart); // Returns: [{ carId, userId }]
+    return NextResponse.json(userCart); //return full cart (array of { carId, userId })
   } catch (err) {
     console.error("GET /api/cart error:", err);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json([], { status: 500 });
   }
 }
+
+
 
 // ---------------------- POST: Add to cart ----------------------
 export async function POST(req: Request) {
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
   }
 }
 
-// ---------------------- DELETE: Remove from cart ----------------------
+
 export async function DELETE(req: Request) {
   const { userId } =  await auth(); // Authenticated user
   if (!userId) return NextResponse.json({ error: "Not logged in" }, { status: 401 });

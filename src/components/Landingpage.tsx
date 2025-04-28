@@ -13,7 +13,7 @@ export default function LandingPage() {
         backgroundImage: "url('./bg1.jpg')",
       }}
     >
-      <div className="absolute inset-0 bg-[#0C2340] bg-opacity-60" />
+      <div className="absolute inset-0 bg-[#0C2340] bg-opacity-30" />
       
       <motion.div
         className="relative z-10 max-w-3xl text-center text-white space-y-6"

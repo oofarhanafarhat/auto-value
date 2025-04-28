@@ -14,9 +14,10 @@ export default function Home() {
     <ChooseUs/>
 <CoreServices/>
 <Autovalues/>
+<UsedCar/>
    <FeaturedCars/>
   
-    <UsedCar/>
+   
 
 
  

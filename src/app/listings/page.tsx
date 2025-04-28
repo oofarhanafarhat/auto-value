@@ -35,7 +35,7 @@ const fetchAllCars = async (): Promise<Car[]> => {
 };
 
 export default function ListingsPage() {
-  const [cars, setCars] = useState<Car[]>([]); // State to store fetched cars
+ const [cars, setCars] = useState<Car[]>([]); // State to store fetched cars
   const { userId } = useAuth(); // Get current user id
   const router = useRouter(); // Router instance
 

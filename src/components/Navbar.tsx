@@ -4,24 +4,25 @@ import Link from 'next/link';
 import { useUser, SignOutButton } from '@clerk/nextjs';
 import { useState, useEffect } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { FaShoppingCart } from 'react-icons/fa';
 
 const Navbar = () => {
   const { user } = useUser();
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
 
-  useEffect(() => {
-    const fetchCartCount = async () => {
-      if (!user) return;
-      try {
-        const res = await fetch('/api/cart-count');
-        const data = await res.json();
-        setCartCount(data.count || 0);
-      } catch (err) {
-        console.error('Error fetching cart count:', err);
-      }
-    };
+  const fetchCartCount = async () => {
+    if (!user) return;
+    try {
+      const res = await fetch('/api/cart');
+      const data = await res.json();
+      setCartCount(data.length || 0);
+    } catch (err) {
+      console.error('Error fetching cart count:', err);
+    }
+  };
 
+  useEffect(() => {
     fetchCartCount();
   }, [user]);
 
@@ -43,8 +44,8 @@ const Navbar = () => {
             <>
               <li><Link href="/dashboard" className="font-semibold">{user.firstName}</Link></li>
               <li>
-                <Link href="/cart" className="relative font-medium hover:text-blue-500">
-                  Cart
+                <Link href="/cart" className="relative font-medium hover:text-blue-500 flex items-center">
+                  <FaShoppingCart className="text-xl" />
                   {cartCount > 0 && (
                     <span className="absolute -top-2 -right-3 text-xs bg-red-500 text-white rounded-full px-2">
                       {cartCount}
@@ -52,7 +53,13 @@ const Navbar = () => {
                   )}
                 </Link>
               </li>
-              <li><SignOutButton><button className="bg-[#0C2340] text-white px-4 py-1 rounded-md hover:bg-red-600">Sign Out</button></SignOutButton></li>
+              <li>
+                <SignOutButton>
+                  <button className="bg-[#0C2340] text-white px-4 py-1 rounded-md hover:bg-red-600">
+                    Sign Out
+                  </button>
+                </SignOutButton>
+              </li>
             </>
           ) : (
             <>
@@ -70,14 +77,26 @@ const Navbar = () => {
       {menuOpen && (
         <div className="md:hidden bg-white px-4 pt-4 pb-6 space-y-4 shadow-lg">
           <Link href="/" className="block font-medium hover:text-blue-500">Home</Link>
+          <Link href="/valuation" className="block font-medium hover:text-blue-500">Valuation</Link>
           <Link href="/listings" className="block font-medium hover:text-blue-500">Listings</Link>
           <Link href="/support" className="block font-medium hover:text-blue-500">Support</Link>
           {user ? (
             <>
               <Link href="/dashboard" className="block font-semibold">{user.firstName}</Link>
-              <Link href="/cart" className="block font-medium hover:text-blue-500">Cart ({cartCount})</Link>
+              <Link href="/cart" className="relative block font-medium hover:text-blue-500">
+                <div className="flex items-center">
+                  <FaShoppingCart className="text-xl" />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1 -right-2 text-xs bg-red-500 text-white rounded-full px-2">
+                      {cartCount}
+                    </span>
+                  )}
+                </div>
+              </Link>
               <SignOutButton>
-                <button className="bg-[#0C2340] text-white px-4 py-1 rounded-md hover:bg-red-600 w-full text-left">Sign Out</button>
+                <button className="bg-[#0C2340] text-white px-4 py-1 rounded-md hover:bg-red-600 w-full text-left">
+                  Sign Out
+                </button>
               </SignOutButton>
             </>
           ) : (

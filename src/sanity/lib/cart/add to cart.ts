@@ -1,6 +1,6 @@
 
-import { db } from "@/sanity/lib/db"; // Drizzle DB instance
-import { cart } from "@/sanity/lib/cart"; // Import the cart table schema
+import { db } from "@/sanity/lib/db/db"; // Drizzle DB instance
+import { cart } from "@/sanity/lib/db/schema"; // Import the cart table schema
 
 
 // Add a car to the cart

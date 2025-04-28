@@ -13,7 +13,7 @@ export interface Car {
 
 import { client } from "./client";
 
-export const fetchCarBySlug = async (slug: string): Promise<Car> => {
+export const fetchCarBySlug = async (slug: string) => {
   const query = 
     `*[_type == "car" && slug.current == $slug][0]{
       _id,

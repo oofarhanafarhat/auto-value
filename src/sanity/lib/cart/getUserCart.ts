@@ -3,8 +3,8 @@
 //   - Joins car data from Sanity using IDs stored in PostgreSQL
 // */
 
-import { db } from "@/sanity/lib/db";
-import { cart } from "@/sanity/lib/cart";
+import { db } from "@/sanity/lib/db/db";
+import { cart } from "@/sanity/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { fetchCarById } from "@/sanity/lib/fetchCarById";
 
