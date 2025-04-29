@@ -1,3 +1,4 @@
+// src/app/listings/[slug]/page.tsx
 export const dynamic = "force-dynamic";
 
 import { client } from "@/sanity/lib/client";
@@ -5,7 +6,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import AddToCartButton from "@/components/AddToCartButton";
 
-// ✅ Proper typing for dynamic route
+
 type Props = {
   params: {
     slug: string;
@@ -13,8 +14,7 @@ type Props = {
 };
 
 export default async function CarDetailPage({ params }: Props) {
-  const slug = decodeURIComponent(params.slug || "");
-  console.log("Slug parameter (decoded):", slug);
+  const slug = decodeURIComponent(params.slug);
 
   const query = `
     *[_type == "car" && slug.current == $slug][0]{
@@ -34,9 +34,7 @@ export default async function CarDetailPage({ params }: Props) {
   let car;
 
   try {
-    console.log("Executing query with slug:", slug);
     car = await client.fetch(query, { slug });
-    console.log("Fetched car data:", car);
   } catch (error) {
     console.error("Error fetching car data:", error);
     throw new Error("Failed to fetch car data.");
@@ -46,17 +44,15 @@ export default async function CarDetailPage({ params }: Props) {
 
   return (
     <div className="max-w-5xl mx-auto p-6 sm:p-8 bg-white shadow-xl rounded-3xl mt-10 space-y-8 transition-all duration-300">
-      {/* Car Image */}
       <div className="relative w-full h-80 sm:h-[28rem] rounded-2xl overflow-hidden shadow-lg group">
         <Image
-          src={car.imageUrl || "/fallback.png"} // Fallback in case image is missing
+          src={car.imageUrl}
           alt={car.name}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
-      {/* Car Title & Specs */}
       <div className="space-y-4">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900">{car.name}</h1>
         <div className="text-lg sm:text-xl text-gray-600 space-y-1">
@@ -71,7 +67,6 @@ export default async function CarDetailPage({ params }: Props) {
         </div>
       </div>
 
-      {/* Description */}
       <div>
         <h2 className="text-2xl font-semibold text-gray-800">Description</h2>
         <p className="mt-3 text-gray-700 leading-relaxed text-base sm:text-lg">
@@ -79,7 +74,6 @@ export default async function CarDetailPage({ params }: Props) {
         </p>
       </div>
 
-      {/* Price & Add to Cart */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="text-3xl sm:text-4xl font-bold text-gray-700">
           ${car.price.toLocaleString()}
