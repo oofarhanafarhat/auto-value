@@ -166,7 +166,8 @@ const total = carData.reduce((sum, car) => sum + (Number(car.price) || 0), 0);
           <span>${total.toLocaleString()}</span>
         </div>
 
-      <Link href={"/checkout"}> <button   className="w-full inline-block text-center bg-blue-600 text-white py-2 rounded-xl mt-4 hover:bg-blue-700 transition"
+        <Link href={`/checkout?total=${total}`}>
+ <button   className="w-full inline-block text-center bg-blue-600 text-white py-2 rounded-xl mt-4 hover:bg-blue-700 transition"
         >
           Proceed to Checkout</button></Link>
       </div>
