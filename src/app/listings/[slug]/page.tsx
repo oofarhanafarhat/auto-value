@@ -9,12 +9,12 @@ import Image from "next/image"; // Optimized image component
 import AddToCartButton from "@/components/AddToCartButton"; // Reusable Add to Cart button
 
 // ✅ Correct type signature for dynamic route in Next.js App Router
-type PageProps = {
+interface CarDetailPageProps {
   params: { slug: string };
-};
+}
 
 // Export default async component for car detail page
-export default async function CarDetailPage({ params }: PageProps) {
+export default async function CarDetailPage({ params }: CarDetailPageProps) {
   // Decode the slug in case it's URL encoded
   const slug = decodeURIComponent(params.slug);
 
