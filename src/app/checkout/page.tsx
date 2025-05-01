@@ -38,7 +38,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div style={{ justifyContent: "center", alignItems: "center", maxWidth: 400, margin: "auto", height: "50vh" }}>
+    <div style={{ justifyContent: "center", alignItems: "center", maxWidth: 400, margin: "auto", height: "30vh" }}>
       <h1>Checkout</h1>
       <Elements stripe={stripePromise} options={{ clientSecret }}>
         <PaymentForm />

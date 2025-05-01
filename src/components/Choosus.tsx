@@ -1,45 +1,43 @@
-// src/landing/components/ChooseUs.tsx
-
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 export const ChooseUs = () => {
-  const features = [
-    {
-      title: "Accuracy & Trust",
-      desc: "We use verified data and AI to provide highly accurate valuations tailored to market trends.",
-    },
-    {
-      title: "Seamless Experience",
-      desc: "From listing to lead capture, enjoy a smooth and intuitive experience at every step.",
-    },
-    {
-      title: "Mobile First",
-      desc: "Fully responsive layout ensures flawless performance across all devices.",
-    },
-    {
-      title: "Secure & Scalable",
-      desc: "Built with modern technology for unmatched security and scalability.",
-    },
-  ];
-
   return (
-    <section className="py-20 px-6 md:px-24 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-[#0C2340] mb-16">
-          Why Choose <span className="text-primary">AutoValue</span>?
-        </h2>
-        <div className="grid gap-10 sm:grid-cols-2">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="p-8 bg-gray-50 rounded-3xl border hover:shadow-2xl transition-transform hover:translate-y-4"
-            >
-              <h3 className="text-2xl font-bold mb-4 text-[#0C2340]">{feature.title}</h3>
-              <p className="text-gray-600">{feature.desc}</p>
-            </div>
-          ))}
+    <section className="w-full bg-[#2563EB] text-white py-20 px-6 md:px-24">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+        {/* Left Side Image */}
+        <div className="flex justify-center">
+          <Image
+            src="/choose1.jpg" // 🔁 Replace this with actual image path from public folder
+            alt="Mailbox Illustration"
+            width={300}
+            height={300}
+            className="w-full max-w-[300px] md:max-w-[350px]"
+          />
+        </div>
+
+        {/* Right Side Content */}
+        <div>
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
+            Subscribe To Our Mailing <br />
+            List And Stay Up To Date
+          </h2>
+          <p className="text-sm md:text-base text-white/80 mb-6">
+            We ll keep you updated with the best new jobs.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4">
+            <input
+              type="email"
+              placeholder="Your email address"
+              className="px-5 py-3 rounded-xl text-gray-800 focus:outline-none flex-1"
+            />
+            <button className="bg-white text-[#2563EB] font-semibold px-6 py-3 rounded-xl hover:bg-gray-100 transition">
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
     </section>

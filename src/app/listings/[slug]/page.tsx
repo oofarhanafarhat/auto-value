@@ -1,6 +1,3 @@
-// src/app/listings/[slug]/page.tsx
-
-// Force Next.js to treat this page as dynamic and fetch fresh data on each request
 export const dynamic = "force-dynamic";
 
 import { client } from "@/sanity/lib/client"; // Import Sanity client
@@ -9,12 +6,12 @@ import Image from "next/image"; // Optimized image component
 import AddToCartButton from "@/components/AddToCartButton"; // Reusable Add to Cart button
 
 // ✅ Correct type signature for dynamic route in Next.js App Router
-interface CarDetailPageProps {
+type PageProps = {
   params: { slug: string };
-}
+};
 
 // Export default async component for car detail page
-export default async function CarDetailPage({ params }: CarDetailPageProps) {
+export default async function CarDetailPage({ params }: PageProps) {
   // Decode the slug in case it's URL encoded
   const slug = decodeURIComponent(params.slug);
 
@@ -31,8 +28,8 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
       mileage,
       fuel,
       transmission
-    }
-  `;
+    }`
+  ;
 
   let car;
 
@@ -48,7 +45,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
   if (!car) return notFound();
 
   return (
-    <div className="max-w-5xl mx-auto p-6 sm:p-8 bg-white shadow-xl rounded-3xl mt-10 space-y-8 transition-all duration-300">
+    <div className="max-w-3xl mx-auto p-6 sm:p-8 bg-gray-50 shadow-xl rounded-3xl mt-10  mb-16 space-y-8 transition-all duration-300">
       {/* Car Image */}
       <div className="relative w-full h-80 sm:h-[28rem] rounded-2xl overflow-hidden shadow-lg group">
         <Image
@@ -91,4 +88,4 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
       </div>
     </div>
   );
-}
+} 

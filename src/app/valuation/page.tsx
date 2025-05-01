@@ -46,7 +46,7 @@ export default function ValuationPage() {
   };
 
   return (
-    <div className="max-w-3xl  mx-auto mt-12 p-6 bg-[#0C2340] rounded-xl shadow-md">
+    <div className="max-w-3xl  mx-auto mt-12 p-6 bg-[#0C2340] rounded-xl shadow-md  lg:mb-20">
       <h2 className="text-2xl font-bold mb-6">Get Your Car&apos;s Estimated Value</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

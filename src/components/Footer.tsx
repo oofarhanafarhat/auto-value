@@ -1,24 +1,28 @@
-import Link from 'next/link'
-import React from 'react'
+// components/Footer.tsx
 
-export const Footer = () => {
+// Importing necessary libraries
+import Link from 'next/link';
+import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
+import React from 'react';
+
+// Fully modern, responsive, professional footer component
+const Footer = () => {
   return (
-    
-        
-    <footer className="bg-[#0C2340] text-white px-6 md:px-20 py-10">
-      <div className="grid md:grid-cols-4 gap-8 text-sm">
-        {/* Brand */}
+    <footer className="bg-gray-100 text-[#0C2340] px-6 md:px-20 pt-14 pb-10">
+      {/* Grid Layout */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+        {/* Logo + Tagline */}
         <div>
-          <h3 className="text-lg font-bold mb-3">AutoValue</h3>
-          <p>
-            Empowering you with smart car valuations, listings, and seamless dealership access.
+          <h3 className="text-2xl font-bold mb-3">AutoValue</h3>
+          <p className="text-sm leading-relaxed">
+            Smart car valuations, seamless listings, and trusted dealership access all in one place.
           </p>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h4 className="text-md font-semibold mb-2">Quick Links</h4>
-          <ul className="space-y-1">
+          <h4 className="text-lg font-semibold mb-3">Quick Links</h4>
+          <ul className="space-y-2 text-sm">
             <li><Link href="/" className="hover:underline">Home</Link></li>
             <li><Link href="/valuation" className="hover:underline">Car Valuation</Link></li>
             <li><Link href="/listings" className="hover:underline">Listings</Link></li>
@@ -28,34 +32,44 @@ export const Footer = () => {
 
         {/* Account */}
         <div>
-          <h4 className="text-md font-semibold mb-2">Account</h4>
-           <ul className="space-y-1">
+          <h4 className="text-lg font-semibold mb-3">Account</h4>
+          <ul className="space-y-2 text-sm">
             <li><Link href="/sign-in" className="hover:underline">Sign In</Link></li>
             <li><Link href="/sign-up" className="hover:underline">Register</Link></li>
             <li><Link href="/forgot-password" className="hover:underline">Forgot Password</Link></li>
           </ul>
-          </div>
+        </div>
 
-{/* Support */}
-<div>
-  <h4 className="text-md font-semibold mb-2">Support</h4>
-  <ul className="space-y-1">
-    <li><Link href="/support" className="hover:underline">Help Center</Link></li>
-    <li><Link href="/privacy" className="hover:underline">Privacy Policy</Link></li>
-    <li><Link href="/terms" className="hover:underline">Terms of Service</Link></li>
-  </ul>
-</div>
-</div>
+        {/* Support */}
+        <div>
+          <h4 className="text-lg font-semibold mb-3">Support</h4>
+          <ul className="space-y-2 text-sm">
+            <li><Link href="/support" className="hover:underline">Help Center</Link></li>
+            <li><Link href="/privacy" className="hover:underline">Privacy Policy</Link></li>
+            <li><Link href="/terms" className="hover:underline">Terms of Service</Link></li>
+          </ul>
+        </div>
+      </div>
 
-<div className="text-center text-xs mt-10 border-t pt-6 border-gray-600">
-<p>&copy; {new Date().getFullYear()} AutoValue. All rights reserved.</p>
-</div>
-</footer>
+      {/* Divider + Bottom Bar */}
+      <div className="mt-10 border-t border-gray-600 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs">
+        <p className="mb-4 sm:mb-0">&copy; {new Date().getFullYear()} AutoValue. All rights reserved.</p>
 
-)
-}
-export default Footer
+        {/* Social Icons */}
+        <div className="flex space-x-4">
+          <Link href="#" className="hover:text-gray-300">
+            <FaFacebookF size={14} />
+          </Link>
+          <Link href="#" className="hover:text-gray-300">
+            <FaInstagram size={14} />
+          </Link>
+          <Link href="#" className="hover:text-gray-300">
+            <FaTwitter size={14} />
+          </Link>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
-    
-  
-
+export default Footer;

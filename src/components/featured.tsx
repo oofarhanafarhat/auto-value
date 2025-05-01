@@ -1,13 +1,13 @@
-
 "use client";
 
-// Importing necessary hooks and libraries
+// Redesigned FeaturedCars section in blog style
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import Image from "next/image";
-import { client } from "@/sanity/lib/client"; // Import Sanity client
+import { client } from "@/sanity/lib/client";
 
-// Defining the TypeScript type for a car listing
+// Type definition for car listing
 type CarListing = {
   _id: string;
   name: string;
@@ -20,75 +20,56 @@ type CarListing = {
   };
 };
 
-// Main FeaturedCars component
+// Main Component
 const FeaturedCars = () => {
-  // State to hold fetched car listings
   const [cars, setCars] = useState<CarListing[]>([]);
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState<string | null>(null); // Error state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // useEffect hook to fetch featured cars from Sanity
+  // Fetch featured cars on mount
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        // GROQ query to get cars where 'addToCart' is true (featured cars)
         const query = `*[_type == "carListing" && addToCart == true]{
           _id,
           name,
           model,
           price,
-          image {
-            asset -> {
-              url
-            }
-          }
+          image { asset->{url} }
         }`;
-
-        const data = await client.fetch(query); // Fetching data
-        setCars(data); // Setting data to state
-        setLoading(false); // Turn off loading once data is fetched
+        const data = await client.fetch(query);
+        setCars(data);
       } catch (err) {
-        setError("Failed to load featured cars."); // Setting error message
+        setError("Failed to load featured cars.");
+      } finally {
         setLoading(false);
       }
     };
-
-    fetchCars(); // Calling the fetch function
+    fetchCars();
   }, []);
 
-  // If still loading, show a loading text
-  if (loading) {
-    return <p className="text-center py-10">Loading featured cars...</p>;
-  }
-
-  // If error occurred, show error message
-  if (error) {
-    return <p className="text-center text-red-500 py-10">{error}</p>;
-  }
+  if (loading) return <p className="text-center py-10">Loading featured cars...</p>;
+  if (error) return <p className="text-center text-red-500 py-10">{error}</p>;
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        {/* Section Heading */}
-        <motion.h2
-          className="text-3xl font-bold text-center mb-12"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Featured Cars
-        </motion.h2>
+    <section className="py-20 bg-[#f9f9f9]">
+      <div className="container mx-auto px-6">
+        {/* Section heading */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#0C2340] text-start">Latest Blogs  Post</h2>
+        
+        </div>
 
-        {/* Cars Grid */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {/* Cars grid */}
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 ">
           {cars.map((car) => (
             <motion.div
               key={car._id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.02 }}
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col"
             >
-              {/* Car Image */}
-              <div className="relative h-56 w-full">
+              {/* Car image */}
+              <div className="relative h-52 w-full">
                 <Image
                   src={car.image.asset.url}
                   alt={car.name}
@@ -97,11 +78,13 @@ const FeaturedCars = () => {
                 />
               </div>
 
-              {/* Car Info */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold">{car.name}</h3>
-                <p className="text-gray-600">{car.model}</p>
-                <p className="text-primary font-bold mt-2">${car.price.toLocaleString()}</p>
+              {/* Car details */}
+              <div className="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl font-semibold text-[#0C2340]">{car.name} november 22,2024</h3>
+                  <p className="text-gray-500">{car.model}</p>
+                  <p className="text-[#0C2340] font-bold mt-2">${car.price.toLocaleString()}</p>
+                </div>
               </div>
             </motion.div>
           ))}

@@ -2,6 +2,9 @@
 
 "use client";
 
+// Redesigned Used Car section for a modern "Add Car" style layout
+// Includes a responsive grid, enhanced hover effects, and a cleaner contact modal
+
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -47,40 +50,47 @@ const UsedCar = () => {
   }, []);
 
   return (
-    <motion.section className="px-6 md:px-20 py-16 text-center bg-[#0C2340]">
-      <h2 className="text-3xl md:text-4xl font-bold mb-10 text-gray-50">Browse Used Cars</h2>
+    <motion.section
+      className="px-4 md:px-20 py-16 bg-[#F8F9FB] text-[#0C2340]"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-start">
+      Recently Added
+      </h2>
 
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-center text-lg">Loading used cars...</p>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p className="text-center text-red-500">{error}</p>
       ) : (
-        <div className="grid md:grid-cols-3 gap-8">
-          {cars.map((car) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          {cars.map((car, index) => (
             <motion.div
-              key={car.name}
-              whileHover={{ scale: 1.03 }}
-              className="rounded-2xl overflow-hidden shadow-lg bg-white text-[#0C2340] border"
+              key={index}
+              whileHover={{ scale: 1.02 }}
+              className="rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-shadow"
             >
-              <div className="relative w-full h-52">
+              <div className="relative w-full h-56">
                 <Image
                   src={car.image?.asset?.url || "/fallback.jpg"}
                   alt={car.name}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
-              <div className="p-5 text-left">
-                <h3 className="text-xl font-semibold">{car.name}</h3>
-                <p className="text-md mb-3">${car.price.toLocaleString()}</p>
 
-                {/* Professional Contact Us Button */}
+              <div className="p-5 space-y-3">
+                <h3 className="text-xl font-semibold">{car.name}</h3>
+                <p className="text-sm text-gray-600">Model: {car.model}</p>
+                <p className="text-lg font-bold">${car.price.toLocaleString()}</p>
+
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 py-2 mt-2 bg-gradient-to-r from-[#0C2340] to-[#102c57] text-white rounded-lg hover:scale-105 hover:shadow-lg transition-all duration-300 font-semibold"
+                  className="mt-4 w-full py-2 bg-[#0C2340] text-white rounded-md hover:bg-[#102c57] transition-all"
                 >
-                  Contact Us
+                  Contact Seller
                 </button>
               </div>
             </motion.div>
@@ -90,37 +100,39 @@ const UsedCar = () => {
 
       {/* Contact Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
-          <div className="bg-white rounded-2xl p-8 w-[90%] max-w-md text-center shadow-xl relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
+          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-lg relative shadow-2xl">
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl"
             >
-              ✖
+              ×
             </button>
 
-            <h3 className="text-2xl font-bold mb-6 text-[#0C2340]">Contact Us</h3>
+            <h3 className="text-2xl font-bold mb-6 text-[#0C2340] text-center">
+              Contact Seller
+            </h3>
 
-            <form className="flex flex-col gap-4">
+            <form className="space-y-4">
               <input
                 type="text"
                 placeholder="Your Name"
-                className="border p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C2340]"
+                className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-[#0C2340]"
               />
               <input
                 type="email"
                 placeholder="Your Email"
-                className="border p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C2340]"
+                className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-[#0C2340]"
               />
               <textarea
                 placeholder="Your Message"
                 rows={4}
-                className="border p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0C2340]"
+                className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-[#0C2340]"
               ></textarea>
 
               <button
                 type="submit"
-                className="py-3 bg-[#0C2340] text-white rounded-md font-semibold hover:bg-opacity-90 transition-all duration-300"
+                className="w-full py-3 bg-[#0C2340] text-white font-semibold rounded-md hover:bg-opacity-90 transition-all"
               >
                 Send Message
               </button>
