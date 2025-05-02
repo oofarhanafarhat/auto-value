@@ -1,21 +1,16 @@
 export const dynamic = "force-dynamic";
 
-import { client } from "@/sanity/lib/client"; // Import Sanity client
-import { notFound } from "next/navigation"; // For handling 404s
-import Image from "next/image"; // Optimized image component
-import AddToCartButton from "@/components/AddToCartButton"; // Reusable Add to Cart button
+import { client } from "@/sanity/lib/client";
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import AddToCartButton from "@/components/AddToCartButton";
 
-// ✅ Correct type signature for dynamic route in Next.js App Router
 type PageProps = {
   params: { slug: string };
 };
 
-// Export default async component for car detail page
-export default async function CarDetailPage({ params }: PageProps) {
-  // Decode the slug in case it's URL encoded
-  const slug = decodeURIComponent(params.slug);
-
-  // GROQ query to fetch specific car by slug
+// ✅ Pure async fetch function — no sync decoding
+async function getCarData(slug: string) {
   const query = `
     *[_type == "car" && slug.current == $slug][0]{
       _id,
@@ -28,24 +23,26 @@ export default async function CarDetailPage({ params }: PageProps) {
       mileage,
       fuel,
       transmission
-    }`
-  ;
-
-  let car;
+    }
+  `;
 
   try {
-    // Fetch car from Sanity
-    car = await client.fetch(query, { slug });
+    const car = await client.fetch(query, { slug });
+    return car;
   } catch (error) {
-    console.error("Error fetching car data:", error);
+    console.error("❌ Error fetching car data:", error);
     throw new Error("Failed to fetch car data.");
   }
+}
 
-  // If car doesn't exist, show 404
+export default async function CarDetailPage({ params }: PageProps) {
+  // ✅ Just use the slug directly
+  const car = await getCarData(params.slug);
+
   if (!car) return notFound();
 
   return (
-    <div className="max-w-3xl mx-auto p-6 sm:p-8 bg-gray-50 shadow-xl rounded-3xl mt-10  mb-16 space-y-8 transition-all duration-300">
+    <div className="max-w-3xl mx-auto p-6 sm:p-8 bg-gray-50 shadow-xl rounded-3xl mt-10 mb-16 space-y-8 transition-all duration-300">
       {/* Car Image */}
       <div className="relative w-full h-80 sm:h-[28rem] rounded-2xl overflow-hidden shadow-lg group">
         <Image
@@ -62,7 +59,8 @@ export default async function CarDetailPage({ params }: PageProps) {
         <div className="text-lg sm:text-xl text-gray-600 space-y-1">
           <p>
             <span className="font-semibold">Year:</span> {car.year} &nbsp;|&nbsp;
-            <span className="font-semibold">Mileage:</span> {Number(car.mileage).toLocaleString()} km
+            <span className="font-semibold">Mileage:</span>{" "}
+            {Number(car.mileage).toLocaleString()} km
           </p>
           <p>
             <span className="font-semibold">Fuel:</span> {car.fuel} &nbsp;|&nbsp;
@@ -88,4 +86,4 @@ export default async function CarDetailPage({ params }: PageProps) {
       </div>
     </div>
   );
-} 
+}
