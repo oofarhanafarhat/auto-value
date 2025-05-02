@@ -23,7 +23,7 @@ export default function Hero() {
         <div className="flex-1 max-w-md w-full">
           {/* Main Heading */}
           <h2 className="text-3xl md:text-4xl font-bold mb-10 text-white">
-            Let's Find Your Perfect Car
+          Let&apos;s Find Your Perfect Car
           </h2>
 
           {/* Form Box */}

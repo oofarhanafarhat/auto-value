@@ -6,25 +6,27 @@ import { useState, useEffect } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { FaShoppingCart } from 'react-icons/fa';
 
+
 const Navbar = () => {
   const { user } = useUser();
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-
-  const fetchCartCount = async () => {
-    if (!user) return;
-    try {
-      const res = await fetch('/api/cart');
-      const data = await res.json();
-      setCartCount(data.length || 0);
-    } catch (err) {
-      console.error('Error fetching cart count:', err);
-    }
-  };
-
+  
   useEffect(() => {
+    const fetchCartCount = async () => {
+      if (!user) return;
+      try {
+        const res = await fetch('/api/cart');
+        const data = await res.json();
+        setCartCount(data.length || 0);
+      } catch (err) {
+        console.error('Error fetching cart count:', err);
+        setCartCount(0);
+      }
+    };
     fetchCartCount();
   }, [user]);
+  
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 

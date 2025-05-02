@@ -17,9 +17,9 @@ const test = [
   },
   {
     name: "Sara Khan",
-    role: "First-time EV Owner",
+    role: "First time EV Owner",
     Title:"GOOD work",
-    comment: "I was nervous about switching to an electric vehicle, but the guidance and listings were amazing!",
+    comment: "I was nervous about switching to an electric vehicle but the guidance and listings were amazing!",
     image: "/cus4.jpeg",
   },
   {
@@ -39,7 +39,7 @@ const test = [
   },
   {
     name: "zara Khan",
-    role: "First-time EV Owner",
+    role: "First time EV Owner",
     Title:"marvelous",
     comment: "I was nervous about switching to an electric vehicle, but the guidance and listings were amazing!",
     image: "/cus1.jpeg",
@@ -76,7 +76,7 @@ export default function Customer() {
                   <p className="text-lg font-bold text-gray-800 mt-4 text-start">{t.Title}</p>
                 </div>
               </div>
-              <p className="text-gray-700 text-sm leading-relaxed">"{t.comment}"</p>
+              <p className="text-gray-700 text-sm leading-relaxed">{t.comment}</p>
             </div>
           ))}
         </div>
