@@ -58,7 +58,7 @@ export default async function CarDetailPage({ params }: PageProps) {
 
       {/* Car Info */}
       <div className="space-y-4">
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900">{car.name}</h1>
+        <h1 className="text-4xl sm:text-3xl font-bold text-gray-900">{car.name}</h1>
         <div className="text-lg sm:text-xl text-gray-600 space-y-1">
           <p>
             <span className="font-semibold">Year:</span> {car.year} &nbsp;|&nbsp;
