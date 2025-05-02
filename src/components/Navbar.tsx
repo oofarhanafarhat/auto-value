@@ -31,7 +31,7 @@ const Navbar = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <header className="bg-white shadow-md fixed w-full z-50">
+    <header className="bg-white shadow-md  w-full z-50">
       <nav className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold text-[#0C2340]">
           AutoValue
@@ -85,7 +85,7 @@ const Navbar = () => {
           {user ? (
             <>
               <Link href="/dashboard" className="block font-semibold">{user.firstName}</Link>
-              <Link href="/cart" className="relative block font-medium hover:text-blue-500">
+              <Link href="/cart" className=" block font-medium hover:text-blue-500">
                 <div className="flex items-center">
                   <FaShoppingCart className="text-xl" />
                   {cartCount > 0 && (

@@ -96,7 +96,7 @@ const total = carData.reduce((sum, car) => sum + (Number(car.price) || 0), 0);
     return <div className="p-6 text-lg">Your cart is empty.</div>;
 
   return (
-    <div className="p-6 max-w-7xl mx-auto grid lg:grid-cols-3 gap-10">
+    <div className="p-6 max-w-7xl mx-auto grid lg:grid-cols-3 gap-10 mt-4">
       
       {/* Left side: List of cart items */}
       <div className="lg:col-span-2 space-y-6">

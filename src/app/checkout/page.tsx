@@ -38,7 +38,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div style={{ justifyContent: "center", alignItems: "center", maxWidth: 400, margin: "auto", height: "30vh" }}>
+    <div style={{ justifyContent: "center", alignItems: "center", maxWidth: 400, margin: "auto", height: "15vh" }}>
       <h1>Checkout</h1>
       <Elements stripe={stripePromise} options={{ clientSecret }}>
         <PaymentForm />
@@ -77,9 +77,9 @@ function PaymentForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
-      <button type="submit" disabled={isProcessing}>
+    <form onSubmit={handleSubmit} className="mt-6 font-bold text-gray-900 ">
+      <PaymentElement className="font-bold " />
+      <button type="submit" disabled={isProcessing} className="font-bold py-2 px-3 bg-gray-800 text-white rounded-full mt-4 mb-10">
         {isProcessing ? "Processing..." : "Pay Now"}
       </button>
       {errorMessages && <div style={{ color: "red" }}>{errorMessages}</div>}
