@@ -35,10 +35,10 @@ async function getCarData(slug: string) {
   }
 }
 
-export default async function CarDetailPage({ params }: PageProps) {
+export default async function CarDetailPage({ params }: { params: { slug: string } }) {
   // ✅ Just use the slug directly
-  const { slug } = await Promise.resolve(params); // 👈 force async handling
-  const car = await getCarData(slug);
+// 👈 force async handling
+  const car = await getCarData(params.slug);
   
 
   if (!car) return notFound();
