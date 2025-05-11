@@ -9,10 +9,10 @@ export default function Hero2(){
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 relative">
         {/* Left Text */}
         <div className="w-full md:w-1/2 text-center md:text-left">
-          <h1 className="text-2xl md:text-5xl font-bold text-gray-900  px-2 leading-loose">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900  px-2 leading-loose">
             BEST
-               <span className="text-[#A2001D] text-5xl mr-10 font-bold ml-2 pl-4">DEALER</span >
-               <span className="text-2xl md:text-5xl font-bold text-gray-900 leading-loose">
+               <span className="text-[#A2001D] text-3xl mr-10 font-bold ml-2 pl-4">DEALER</span >
+               <span className="text-2xl md:text-3xl font-bold text-gray-900 leading-loose">
             FOR <br /> YOUR FOUR WHEELER
           </span>
           </h1>

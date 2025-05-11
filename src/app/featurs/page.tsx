@@ -34,11 +34,20 @@ const ExploreSection = () => {
         <h2 className="text-2xl font-normal text-center text-[#666872] mb-10">
           Explore 
         </h2 >
-        <div className='flex justify-center space-x-4 mb-14'>
-        <button className='text-center px-4 py-3 font-light bg-[#A2001D] text-white rounded-full hover:bg-gray-300 hover:text-gray-700'>Cars & Minivan</button>
-        <button className='text-center px-4 py-3 font-light text-[#666872] rounded-xl hover:text-gray-500 hover:bg-gray-200 hover:translate-y-3 hover:scale-75 hover:shadow-lg'>Trucks</button>
-        <button className='text-center px-4 py-3 font-light text-[#666872] rounded-xl hover:text-gray-500 hover:bg-gray-200 hover:translate-y-3 hover:scale-75 hover:shadow-lg'>Crossovers & SUVs</button>
-        <button className='text-center px-4 py-3 font-light text-[#666872] rounded-xl hover:text-gray-500 hover:bg-gray-200 hover:translate-y-3 hover:scale-75 hover:shadow-lg'>Electrified</button></div>
+   <div className="flex flex-wrap justify-center gap-4 mb-14">
+          {['Cars & Minivan', 'Trucks', 'Crossovers & SUVs', 'Electrified'].map((category, i) => (
+            <button
+              key={i}
+              className={`px-4 py-3 font-light rounded-full transition-all duration-300 ${
+                i === 0
+                  ? 'bg-[#A2001D] text-white hover:bg-gray-300 hover:text-gray-700'
+                  : 'text-[#666872] hover:text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2  lg:girds-cols-3 gap-10">
           {cars.map((car) => (
@@ -115,4 +124,4 @@ const ExploreSection = () => {
   );
 };
 
-export default ExploreSection;
+export default ExploreSection

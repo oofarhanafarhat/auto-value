@@ -1,4 +1,4 @@
-import Image from 'next/image';
+ import Image from 'next/image';
 
 export default function OurServicesSection() {
   return (
@@ -57,12 +57,12 @@ export default function OurServicesSection() {
             height={250}// Replace with your actual image path
             alt="EV car"
             
-            className="object-cover relative z-10 w-full md:w-[600px] h-[250px] md:-mb-1 mt-16 ml-20   "
+            className="object-cover relative z-10 w-full md:w-[600px]  lg:w-[900px] h-[250px] md:-mb-1 mt-16  md:ml-20 lg:pr-auto  "
           />
         </div>
 
         {/* Text Section */}
-        <div className="flex flex-col justify-center items-start bg-[#FFFFFE] mt-10 px-6 h-80  w-[500px] text-start">
+        <div className="flex flex-col justify-center items-start bg-[#FFFFFE] mt-10 px-6 h-80  w-full md:w-[500px] lg:w-auto text-start">
           <h3 className="text-2xl font-bold text-gray-800 mb-4 ml-20">EVs For Everyone</h3>
           <p className="text-sm text-gray-600 mb-10 px-20">
             We Provide Many Of The Best Services For You And You Will Get The Best Benefits Here
