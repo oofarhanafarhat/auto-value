@@ -41,7 +41,7 @@ export default function Hero2(){
             width={690}
             height={375}
             alt="Car Hero"
-            className="w-full h-auto drop-shadow-xl mx-auto"
+            className="w-full h-auto drop-shadow-xl mx-auto hover:translate-x-6 hover:translate-y-10 hover:scale-100" 
           />
 
           {/* Buttons under Image */}

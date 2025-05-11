@@ -38,9 +38,9 @@ const ExploreSection = () => {
           {['Cars & Minivan', 'Trucks', 'Crossovers & SUVs', 'Electrified'].map((category, i) => (
             <button
               key={i}
-              className={`px-4 py-3 font-light rounded-full transition-all duration-300 ${
+              className={`px-4 py-3 font-light rounded-full hover:translate-y-4  transition-all duration-300 ${
                 i === 0
-                  ? 'bg-[#A2001D] text-white hover:bg-gray-300 hover:text-gray-700'
+                  ? 'bg-[#A2001D] text-white hover:bg-gray-300 hover:text-gray-700 hover:translate-y-4'
                   : 'text-[#666872] hover:text-gray-700 hover:bg-gray-200'
               }`}
             >

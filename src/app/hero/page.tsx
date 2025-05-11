@@ -60,7 +60,7 @@ export default function HeroWithEstimator() {
             width={690}
             height={375}
             alt="Car Hero"
-            className="w-full h-auto max-w-[500px] drop-shadow-xl"
+            className="w-full h-auto max-w-[500px] drop-shadow-xl hover:translate-y-10 hover:sacale-105 translate-x-6"
           />
 
           {/* Slide Navigation */}
