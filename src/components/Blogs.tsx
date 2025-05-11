@@ -33,7 +33,6 @@ const UsedCar = () => {
         const query = `*[_type == "usedCar"]{
           name,
           model,
-          price,
           image{asset->{url}},
         }`;
         const data = await client.fetch(query);
@@ -51,13 +50,13 @@ const UsedCar = () => {
 
   return (
     <motion.section
-      className="px-4 md:px-20 py-16 bg-[#F8F9FB] text-[#0C2340]"
+      className="px-4 md:px-20 py-16 bg-[#EAEBF0] text-[#666872] "
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-start">
-      Recently Added
+      <h2 className="text-3xl md:text-2xl font-normal mb-12 text-center">
+      Blogs
       </h2>
 
       {loading ? (
@@ -83,15 +82,9 @@ const UsedCar = () => {
 
               <div className="p-5 space-y-3">
                 <h3 className="text-xl font-semibold">{car.name}</h3>
-                <p className="text-sm text-gray-600">Model: {car.model}</p>
-                <p className="text-lg font-bold">${car.price.toLocaleString()}</p>
+                <p className="text-sm font-semibold  text-gray-500">{car.model}</p>
+                {/* <p className="text-lg font-bold">${car.price.toLocaleString()}</p> */}
 
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="mt-4 w-full py-2 bg-[#0C2340] text-white rounded-md hover:bg-[#102c57] transition-all"
-                >
-                  Contact Seller
-                </button>
               </div>
             </motion.div>
           ))}

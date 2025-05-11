@@ -1,38 +1,21 @@
-import Hero from "@/components/Landingpage"
+import Hero from "@/app/hero/page"
 import BrandsSection from "@/components/Brand"
-import FeaturedCars from "@/components/featured" 
-import Modal from "@/components/M";
-import Customer from "@/components/customer";
-import { ChooseUs}  from "@/components/Choosus";
-import FeaturedListings from "@/components/autovalue";
-import UsedCar from "@/components/UsedCar"
-import CarCategories from "@/components/categories";
-import WhyElectricVehicle from "@/components/vehicles";
+import Customer from "@/components/customer"
+import UsedCar from "@/components/Blogs"
+import ExploreSection from "@/app/featurs/page"
+
+import OurServicesSection from "@/components/servicess";
 
 export default function Home() {
   return (
- <main>
- <Hero/>
-   <CarCategories/>
-   <BrandsSection/>
-   <FeaturedListings/>
-   <WhyElectricVehicle/>
-  <Modal/>
-  <UsedCar/>
-  
-<Customer/>
-<FeaturedCars/>
-<ChooseUs/>
-
-  
-  
-   
-
-
- 
-
-
-
- </main>
+    <main>
+      <Hero />
+      <BrandsSection />
+      <ExploreSection />
+      <OurServicesSection />
+        <Customer />
+      <UsedCar />
+    
+    </main>
   );
 }

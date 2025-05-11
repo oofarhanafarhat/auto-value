@@ -1,71 +1,106 @@
-// components/Footer.tsx
+// File: components/Footer.tsx
 
-// Importing necessary libraries
-import Link from 'next/link';
-import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
-import React from 'react';
+"use client";
 
-// Fully modern, responsive, professional footer component
-const Footer = () => {
+import React from "react";
+import { FaFacebookF, FaLinkedinIn, FaTwitter, FaArrowRight } from "react-icons/fa";
+
+// ✅ Fully styled footer with inline arrow in input
+const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-100 text-[#0C2340] px-6 md:px-20 pt-14 pb-10">
-      {/* Grid Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
-        {/* Logo + Tagline */}
+    <footer className="bg-[#F8F8F8] text-gray-800 mt-10 border-t">
+      {/* ✅ Top section: newsletter + 3 columns */}
+      <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        {/* ✅ Newsletter Section */}
         <div>
-          <h3 className="text-2xl font-bold mb-3">AutoValue</h3>
-          <p className="text-sm leading-relaxed">
-            Smart car valuations, seamless listings, and trusted dealership access all in one place.
-          </p>
+          <h3 className="text-lg font-semibold mb-3">Subscribe To The Newsletter</h3>
+
+          {/* ✅ Input with red circle arrow inside */}
+          <div className="relative w-full">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full px-4 py-2 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition"
+              aria-label="Subscribe"
+            >
+              <FaArrowRight className="text-sm" />
+            </button>
+          </div>
+
+          {/* ✅ Social Media Icons */}
+          <div className="flex space-x-3 mt-4 text-xl text-gray-600">
+            <a
+              href="https://twitter.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
+              <FaTwitter className="hover:text-blue-400 cursor-pointer  bg-blue-500 rounded-full text-gray-100" />
+            </a>
+            <a
+              href="https://facebook.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <FaFacebookF className="hover:text-blue-600 cursor-pointer bg-blue-950 rounded-full text-gray-100" />
+            </a>
+            <a
+              href="https://linkedin.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedinIn className="hover:text-blue-700 cursor-pointer  bg-blue-950 rounded-full text-gray-100 " />
+            </a>
+          </div>
         </div>
 
-        {/* Quick Links */}
+        {/* ✅ Buying & Selling Links */}
         <div>
-          <h4 className="text-lg font-semibold mb-3">Quick Links</h4>
+          <h3 className="text-lg font-semibold mb-3">Buying & Selling</h3>
           <ul className="space-y-2 text-sm">
-            <li><Link href="/" className="hover:underline">Home</Link></li>
-            <li><Link href="/valuation" className="hover:underline">Car Valuation</Link></li>
-            <li><Link href="/listings" className="hover:underline">Listings</Link></li>
-            <li><Link href="/contact" className="hover:underline">Contact</Link></li>
+            <li>Find A Car</li>
+            <li>Listings By City</li>
+            <li>Sell Your Car</li>
+            <li>Compare Side By Side</li>
           </ul>
         </div>
 
-        {/* Account */}
+        {/* ✅ Resources Links */}
         <div>
-          <h4 className="text-lg font-semibold mb-3">Account</h4>
+          <h3 className="text-lg font-semibold mb-3">Resource</h3>
           <ul className="space-y-2 text-sm">
-            <li><Link href="/sign-in" className="hover:underline">Sign In</Link></li>
-            <li><Link href="/sign-up" className="hover:underline">Register</Link></li>
-            <li><Link href="/forgot-password" className="hover:underline">Forgot Password</Link></li>
+            <li>Blog</li>
+            <li>Guides</li>
+            <li>FAQ</li>
+            <li>Help Center</li>
           </ul>
         </div>
 
-        {/* Support */}
+        {/* ✅ About Links */}
         <div>
-          <h4 className="text-lg font-semibold mb-3">Support</h4>
+          <h3 className="text-lg font-semibold mb-3">About</h3>
           <ul className="space-y-2 text-sm">
-            <li><Link href="/support" className="hover:underline">Help Center</Link></li>
-            <li><Link href="/privacy" className="hover:underline">Privacy Policy</Link></li>
-            <li><Link href="/terms" className="hover:underline">Terms of Service</Link></li>
+            <li>Company</li>
+            <li>Careers</li>
+            <li>Contact</li>
           </ul>
         </div>
       </div>
 
-      {/* Divider + Bottom Bar */}
-      <div className="mt-10 border-t border-gray-600 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs">
-        <p className="mb-4 sm:mb-0">&copy; {new Date().getFullYear()} AutoValue. All rights reserved.</p>
-
-        {/* Social Icons */}
-        <div className="flex space-x-4">
-          <Link href="#" className="hover:text-gray-300">
-            <FaFacebookF size={14} />
-          </Link>
-          <Link href="#" className="hover:text-gray-300">
-            <FaInstagram size={14} />
-          </Link>
-          <Link href="#" className="hover:text-gray-300">
-            <FaTwitter size={14} />
-          </Link>
+      {/* ✅ Footer Bottom Legal */}
+      <div className="border-t border-gray-200 py-6 text-center text-sm text-gray-500">
+        <p>&copy; 2025 Car Leadership</p>
+        <div className="flex justify-center flex-wrap gap-4 mt-2">
+          <span>Terms Of Service</span>
+          <span>Privacy Policy</span>
+          <span>Trust & Safety</span>
+          <span>Law Enforcement</span>
         </div>
       </div>
     </footer>

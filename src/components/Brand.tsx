@@ -19,14 +19,15 @@ const brands = [
 export default function BrandsSection() {
   return (
     // ✅ Section background and padding
-    <section className="bg-white py-16">
+    <section className="bg-[#F8F8F8] py-16">
       <div className="max-w-7xl mx-auto px-4">
-        {/* ✅ Heading and button row */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-10">
-          {/* ✅ Section heading */}
-          <h2 className="text-3xl lg:text-4xl font-bold text-[#0C2340]">
-            Explore Our Premium Brands
+      <h2 className="text-3xl lg:text-2xl font-light text-[#100E34] text-center py-10  ">
+            Brands
           </h2>
+        {/* ✅ Heading and button row */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-10 ">
+          {/* ✅ Section heading */}
+          
 
         </div>
 
@@ -34,7 +35,7 @@ export default function BrandsSection() {
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-9 gap-6 items-center justify-items-center">
           {brands.map((brand) => (
             <div key={brand.name} className="flex flex-col items-center">
-              <div className="relative w-24 h-12 grayscale hover:grayscale-0 transition">
+              <div className="relative w-24 h-12 grayscale hover:grayscale-0">
                 <Image
                   src={brand.logo}
                   alt={`${brand.name} Logo`}

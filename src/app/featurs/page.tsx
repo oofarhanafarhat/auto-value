@@ -1,18 +1,13 @@
-// src/landing/components/ListingsPage.tsx
+'use client';
 
-"use client"; // Client-side component
-
-import { useEffect, useState } from "react"; // React hooks
-import { client } from "@/sanity/lib/client"; // Sanity client
-import { urlFor } from "@/sanity/lib/image"; // Sanity image URL builder
-import { groq } from "next-sanity"; // GROQ query builder
-import Image from "next/image"; // Next.js optimized Image
-import Link from "next/link"; // For linking to detail pages
-import { useRouter } from "next/navigation"; // For redirecting
-import { useAuth } from "@clerk/nextjs"; // Clerk authentication
+import { fetchCars } from '@/sanity/lib/fetchCars';
+import { urlFor } from '@/sanity/lib/image';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 
-interface Car{
+interface Car {
   _id: string;
   name: string;
   slug: { current: string };
@@ -21,62 +16,31 @@ interface Car{
   year: string;
   fuel: string;
 }
-// Function to fetch all cars from Sanity
-const fetchAllCars = async (): Promise<Car[]> => {
-  const query = groq`
-    *[_type == "car"] | order(_createdAt desc){
-      _id,
-      name,
-      slug,
-      price,
-      image,
-      year,
-      fuel
-    }`
-  
-  return await client.fetch(query);
-};
 
-export default function ListingsPage() {
- const [cars, setCars] = useState<Car[]>([]); // State to store fetched cars
-  const { userId } = useAuth(); // Get current user id
-  const router = useRouter(); // Router instance
+const ExploreSection = () => {
+  const [cars, setCars] = useState<Car[]>([]);
 
-  // Fetch cars when component mounts
   useEffect(() => {
-    fetchAllCars().then(setCars);
+    const getCars = async () => {
+      const data = await fetchCars();
+      setCars(data);
+    };
+    getCars();
   }, []);
 
-  // Handle add to cart
-  const handleAddToCart = async (carId: string) => {
-    if (!userId) {
-      // Redirect to sign-in page if user not logged in
-      return router.push("/sign-in");
-    }
-
-    try {
-      const res = await fetch("/api/cart", {
-        method: "POST",
-        body: JSON.stringify({ carId }),
-      });
-
-      if (res.ok) {
-        alert("Car added to cart successfully!");
-      } else {
-        console.error("Please sign in to your account to continue");
-      }
-    } catch (error) {
-      console.error("Error while adding to cart:", error);
-    }
-  };
-
   return (
-    <section className="p-6 max-w-7xl mx-auto">
-      {/* Page Heading */}
-      <h1 className="text-4xl font-bold text-center text-[#0C2340] mb-12">
-        Explore Available Cars
-      </h1>
- <div className="grid grid-cols-1 md:grid-cols-3  lg:girds-cols-3 gap-10">
+    <section className="bg-[#F7F7F9] py-12">
+      <div className="max-w-6xl mx-auto px-4">
+        <h2 className="text-2xl font-normal text-center text-[#666872] mb-10">
+          Explore 
+        </h2 >
+        <div className='flex justify-center space-x-4 mb-14'>
+        <button className='text-center px-4 py-3 font-light bg-[#A2001D] text-white rounded-full hover:bg-gray-300 hover:text-gray-700'>Cars & Minivan</button>
+        <button className='text-center px-4 py-3 font-light text-[#666872] rounded-xl hover:text-gray-500 hover:bg-gray-200 hover:translate-y-3 hover:scale-75 hover:shadow-lg'>Trucks</button>
+        <button className='text-center px-4 py-3 font-light text-[#666872] rounded-xl hover:text-gray-500 hover:bg-gray-200 hover:translate-y-3 hover:scale-75 hover:shadow-lg'>Crossovers & SUVs</button>
+        <button className='text-center px-4 py-3 font-light text-[#666872] rounded-xl hover:text-gray-500 hover:bg-gray-200 hover:translate-y-3 hover:scale-75 hover:shadow-lg'>Electrified</button></div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2  lg:girds-cols-3 gap-10">
           {cars.map((car) => (
             <div
               key={car._id}
@@ -84,9 +48,8 @@ export default function ListingsPage() {
             >
               {/* Left - Car Image (no background, sharp corners) */}
               <div className="relative z-10 w-full md:w-[330px] h-[200px] -mr-6 md:-mr-16 md:-mb-1 mt-16 pl-28">
-                 <Image
+                <Image
                   src={urlFor(car.image).url()}
-              
                   alt={car.name}
                   fill
                   className="object-cover pt-8 "
@@ -128,7 +91,7 @@ export default function ListingsPage() {
 
                   <Link
                     href={`/listing/${car.slug.current}`}
-                    className="inline-flex items-center justify-center  bg-[#0C2340] text-white px-6 py-3 rounded-full hover:bg-blue-900 transition text-sm font-medium"
+                    className="inline-flex items-center justify-center  bg-[#0C2340] text-white px-6 py-2 rounded-full hover:bg-blue-900 transition text-sm font-medium"
                   >
                     Order Now
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -138,9 +101,18 @@ export default function ListingsPage() {
             </div>
           ))}
         </div>
-        <div className="mt-12 text-center">
-          
+
+        <div className="mt-12 text-end">
+          <Link
+            href="/listings"
+            className="inline-block bg-[[#F7F7F9] text-[#0C2340] font-light px-6 py-2  hover:shadow-lg hover:border-gray-900 rounded-2xl  hover:bg-gray-300 transition text-sm "
+          >
+            View More Cars
+          </Link>
         </div>
+      </div>
     </section>
   );
-}
+};
+
+export default ExploreSection;

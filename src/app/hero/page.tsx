@@ -1,0 +1,153 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+
+export default function HeroWithEstimator() {
+  // State variables
+  const [condition, setCondition] = useState("New & Used");
+  const [make, setMake] = useState("");     // Now user-defined
+  const [model, setModel] = useState("");   // Now user-defined
+  const [userPrice, setUserPrice] = useState<number | "">("");
+  const [estimate, setEstimate] = useState<number | null>(null);
+
+  // Estimate logic
+  const handleEstimate = () => {
+    if (!userPrice || isNaN(Number(userPrice))) {
+      alert("Please enter a valid price.");
+      return;
+    }
+
+    const multiplier = condition === "Used" ? 0.75 : 1;
+    const randomBoost = Math.random() * 5000;
+    const final = Math.round(Number(userPrice) * multiplier + randomBoost);
+    setEstimate(final);
+  };
+
+  return (
+    <section className="relative w-full bg-[#F8F8F8] py-16 px-4">
+      {/* Hero Section */}
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 relative">
+        {/* Left Side */}
+        <div className="w-full md:w-1/2 text-center md:text-left">
+          <h1 className="text-2xl md:text-5xl font-bold text-gray-900 leading-tight">
+            Find Your Dreams
+          </h1>
+          <span className="text-[#A2001D] text-6xl mr-10 font-bold">car</span>
+          <Link
+            href="/listings"
+            className="mt-6 inline-block bg-blue-950 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-700 transition duration-300"
+          >
+            Shop Now
+          </Link>
+        </div>
+
+        {/* Right Side */}
+        <div className="relative w-full md:w-1/2 flex flex-col items-center">
+          {/* Decorative Dots */}
+          <div className="absolute top-0 right-0 flex flex-col items-center space-y-3 pr-2">
+            <div className="w-1.5 h-1.5 bg-gray-500 rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+            <div className="w-1.5 h-1.5 bg-gray-500 rounded-full"></div>
+          </div>
+
+          {/* Car Image */}
+          <Image
+            src="/hero.png"
+            width={690}
+            height={375}
+            alt="Car Hero"
+            className="w-full h-auto drop-shadow-xl mx-auto"
+          />
+
+          {/* Slide Navigation */}
+          <div className="mt-4 flex gap-4">
+            <Link href="/hero2">
+              <button className="bg-white hover:bg-gray-400 text-gray-800 font-bold px-5 py-2 rounded-full transition duration-300">
+                &lt;
+              </button>
+            </Link>
+            <Link href="/">
+              <button className="bg-white hover:bg-gray-400 text-gray-800 font-bold px-5 py-2 rounded-full transition duration-300">
+                &gt;
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Estimator Section */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 translate-y-1/2 bottom-0 w-full max-w-4xl bg-white p-6 rounded-full shadow-xl mt-20">
+        <div className="flex flex-wrap justify-center gap-4 mb-4">
+          {/* Condition Dropdown */}
+          <select
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+            className="px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none"
+          >
+            <option>New & Used</option>
+            <option>Used</option>
+          </select>
+
+          {/* User Input for Make */}
+          <input
+            type="text"
+            placeholder="Enter Make"
+            value={make}
+            onChange={(e) => setMake(e.target.value)}
+            className="px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none w-40"
+          />
+
+          {/* User Input for Model */}
+          <input
+            type="text"
+            placeholder="Enter Model"
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
+            className="px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none w-40"
+          />
+
+          {/* Price Input */}
+          <input
+            type="number"
+            placeholder="Enter Price"
+            value={userPrice}
+            onChange={(e) =>
+              setUserPrice(e.target.value === "" ? "" : Number(e.target.value))
+            }
+            className="px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none w-40"
+          />
+
+          {/* Estimate Button */}
+          <button
+            onClick={handleEstimate}
+            className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-full transition duration-300 flex items-center gap-2"
+          >
+            <svg
+              className="w-5 h-5 text-white"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            Search
+          </button>
+        </div>
+
+        {/* Display Estimate */}
+        {estimate && (
+          <div className="text-center text-xl font-bold text-green-700">
+            Estimated Price: ${estimate.toLocaleString()}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
