@@ -48,7 +48,7 @@ export default function Customer() {
                 />
                 <div>
                   <h4 className="text-lg font-semibold text-[#0C2340]">{t.name}</h4>
-                  <p className="text-md font-light text-[#100E34]  text-start">{t.Title}</p>
+                  <p className="text-sm font-medium text-[#100E34]  text-start">{t.Title}</p>
                 </div>
               </div>
               <p className="text-gray-700 text-sm leading-relaxed">{t.comment}</p>
