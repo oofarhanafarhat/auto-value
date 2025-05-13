@@ -81,7 +81,7 @@ const UsedCar = () => {
               </div>
 
               <div className="p-5 space-y-3">
-                <h3 className="text-xl font-semibold">{car.name}</h3>
+                <h3 className="text-sm font-semibold">{car.name}</h3>
                 <p className="text-sm font-semibold  text-gray-500">{car.model}</p>
                 {/* <p className="text-lg font-bold">${car.price.toLocaleString()}</p> */}
 
