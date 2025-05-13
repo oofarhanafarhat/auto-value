@@ -98,13 +98,10 @@ const ExploreSection = () => {
                     $ {car.price}
                   </p>
 
-                  <Link
-                    href={`/listing/${car.slug.current}`}
-                    className="inline-flex items-center justify-center  bg-[#0C2340] text-white px-6 py-2 rounded-full hover:bg-blue-900 transition text-sm font-medium"
-                  >
-                    Order Now
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
+                  {/* <button className=' text-white  bg-gray-900 font-light px-6 py-2 rounded-2xl hover:shadow-lg hover:border-gray-900 hover:bg-gray-300 transition text-sm justify-items-end'>
+                    Order Now  <ArrowRight className="ml-2 h-4 w-4" />
+                   
+                </button> */}
                 </div>
               </div>
             </div>

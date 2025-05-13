@@ -126,21 +126,20 @@ export default function ListingsPage() {
                     $ {car.price}
                   </p>
 
-                  <Link
-                    href={`/listing/${car.slug.current}`}
-                    className="inline-flex items-center justify-center  bg-[#0C2340] text-white px-6 py-3 rounded-full hover:bg-blue-900 transition text-sm font-medium"
-                  >
-                    Order Now
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </div>
+                
+                  {/* // href={`/listing/${car.slug.current}`}
+                  className="inline-flex items-center justify-center  bg-[#0C2340] text-white px-6 py-3 rounded-full hover:bg-blue-900 transition text-sm font-" */}
+                {/* > */}
+                  {/* Order Now
+                  <ArrowRight className="ml-2 h-4 w-4" /> */}
+                {/* </Link> */}
               </div>
             </div>
-          ))}
-        </div>
-        <div className="mt-12 text-center">
-          
-        </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-12 text-center">
+      </div>
     </section>
   );
 }
