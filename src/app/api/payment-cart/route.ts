@@ -2,17 +2,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-03-31.basil', // ✅ MUST INCLUDE
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: '2025-03-31.basil',
 });
 
 export async function POST(req: NextRequest) {
   try {
-    const { amount } = await req.json();
+    const body = await req.json();
+    const { amount } = body;
+
+    console.log("💰 Received amount in API:", amount);
 
     if (!amount || isNaN(amount) || amount <= 0) {
+      console.warn("❌ Invalid amount:", amount);
       return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
     }
+
+    if (amount > 999999.99) {
+      console.warn("❌ Amount too large:", amount);
+      return NextResponse.json(
+        { error: 'Amount must be no more than $999,999.99' },
+        { status: 400 }
+      );
+    }
+
+    // continue...
+
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100), // cents

@@ -12,6 +12,7 @@ export default function CheckoutPageInner() {
   const searchParams = useSearchParams();
   const total = searchParams.get("total");
   const [clientSecret, setClientSecret] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const status = searchParams.get("redirect_status");
@@ -21,20 +22,50 @@ export default function CheckoutPageInner() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (!total) return;
+    const fetchClientSecret = async () => {
+      if (!total || isNaN(Number(total))) {
+        setError("❗ Invalid total amount. Please go back and try again.");
+        return;
+      }
 
-    fetch("/api/payment-cart", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: parseFloat(total) }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setClientSecret(data.clientSecret);
-      });
+      try {
+        const res = await fetch("/api/payment-cart", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: parseFloat(total) }),
+        });
+
+        const contentType = res.headers.get("content-type");
+
+        if (res.ok && contentType?.includes("application/json")) {
+          const data = await res.json();
+          setClientSecret(data.clientSecret);
+        } else {
+          const errText = await res.text();
+          console.error("❌ Server returned non-JSON:", errText);
+          setError("❗ Something went wrong while preparing payment.");
+        }
+      } catch (err) {
+        console.error("❌ Fetch failed:", err);
+        setError("❗ Unable to connect to payment server. Please try again later.");
+      }
+    };
+
+    fetchClientSecret();
   }, [total]);
 
-  if (!clientSecret) return <p className="p-6">Loading checkout form...</p>;
+  if (error) {
+    return <p className="p-6 text-red-600">{error}</p>;
+  }
+
+  if (!clientSecret) {
+    return (
+      <div className="p-6 flex flex-col items-center justify-center text-center">
+        <p className="text-gray-700">Preparing your secure checkout...</p>
+        <div className="mt-4 animate-spin h-6 w-6 border-2 border-green-500 border-t-transparent rounded-full" />
+      </div>
+    );
+  }
 
   return (
     <Elements
@@ -42,7 +73,7 @@ export default function CheckoutPageInner() {
       options={{
         clientSecret,
         appearance: {
-          theme: "stripe", // 👈 Add this
+          theme: 'stripe',
         },
       }}
     >
