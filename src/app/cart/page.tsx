@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { urlFor } from "@/sanity/lib/image";
-import { useRouter } from "next/navigation";
+import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
-import { client } from "@/sanity/lib/client";
+import { useRouter } from "next/navigation";
 
 interface CartItem {
   carId: string;
@@ -17,20 +17,22 @@ interface Car {
   title: string;
   slug: { current: string };
   price: number;
-  image: string;
+  image: any;
   model: string;
   year: number;
+  quantity: number;
 }
 
 export default function CartPage() {
   const { user } = useUser();
+  const router = useRouter();
+
   const [carData, setCarData] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     if (!user) {
-      router.push("/sign-in");  // First push, then return
+      router.push("/sign-in");
       return;
     }
 
@@ -42,7 +44,14 @@ export default function CartPage() {
         });
 
         const cartItems: CartItem[] = await res.json();
-        const ids = cartItems.map((item) => item.carId);
+
+        // Group by quantity
+        const quantityMap: Record<string, number> = {};
+        cartItems.forEach((item) => {
+          quantityMap[item.carId] = (quantityMap[item.carId] || 0) + 1;
+        });
+
+        const ids = Object.keys(quantityMap);
 
         if (ids.length === 0) {
           setCarData([]);
@@ -51,11 +60,23 @@ export default function CartPage() {
         }
 
         const query = `*[_type == "car" && _id in $ids]{
-          _id, title, slug, price, image, model, year
+          _id,
+          title,
+          slug,
+          price,
+          image,
+          model,
+          year
         }`;
 
         const cars: Car[] = await client.fetch(query, { ids });
-        setCarData(cars);
+
+        const carsWithQuantity = cars.map((car) => ({
+          ...car,
+          quantity: quantityMap[car._id] || 1,
+        }));
+
+        setCarData(carsWithQuantity);
       } catch (error) {
         console.error("Error loading cart:", error);
       } finally {
@@ -76,65 +97,58 @@ export default function CartPage() {
 
       setCarData((prev) => prev.filter((car) => car._id !== carId));
     } catch (error) {
-      console.error("Error removing from cart:", error);
+      console.error("Error removing car:", error);
     }
   };
 
-// Total calculation
-const total = carData.reduce((sum, car) => sum + (Number(car.price) || 0), 0);
-
-// Total display
-<div className="flex justify-between text-lg font-bold">
-  <span>Total</span>
-  <span>${total.toLocaleString()}</span>
-</div>
-
+  const total = carData.reduce(
+    (sum, car) => sum + (car.price * (car.quantity || 1)),
+    0
+  );
 
   if (loading) return <div className="p-6">Loading your cart...</div>;
-
   if (carData.length === 0)
     return <div className="p-6 text-lg">Your cart is empty.</div>;
 
   return (
-    <div className="p-6 max-w-7xl mx-auto grid lg:grid-cols-3 gap-10 mt-4">
-      
-      {/* Left side: List of cart items */}
-      <div className="lg:col-span-2 space-y-6">
-        <h1 className="text-3xl font-bold mb-4">Your Cart</h1>
+    <div className="max-w-[400px] mx-auto px-4 py-10">
+      <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
 
+      {/* Cart Items */}
+      <div className="space-y-6">
         {carData.map((car) => (
           <div
             key={car._id}
-            className="flex flex-col md:flex-row items-center gap-4 border rounded-2xl p-4 shadow-sm bg-white"
+            className="flex items-center gap-6 border-b pb-4"
           >
             <Image
-              src={car.image ? urlFor(car.image).url() : "/fallback.jpg"}
-              alt={car.title || "Car Image"}
-              width={200}
-              height={150}
-              className="rounded-xl object-cover w-full md:w-48 h-36"
+              src={car.image ? urlFor(car.image).width(200).url() : ""}
+              alt={car?.title || "Car image"} 
+              width={120}
+              height={120}
+              className="rounded object-cover"
             />
 
-            <div className="flex-1 space-y-1">
+            <div className="flex-1 flex flex-col">
               <h2 className="text-xl font-semibold">{car.title}</h2>
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-sm">
                 {car.model} - {car.year}
               </p>
-              <p className="text-primary font-semibold text-lg">
-                ${car.price.toLocaleString()}
+              <p className="text-sm text-gray-600">Quantity: {car.quantity}</p>
+              <p className="mt-1 font-medium">
+                ${car.price.toLocaleString()} each
               </p>
 
-              <div className="flex justify-between text-sm mt-2">
+              <div className="flex justify-between items-center mt-2">
                 <Link
-                  href={`/listings/${car.slug.current}`}
-                  className="text-blue-600 hover:underline"
+                  href={`/listing/${car.slug.current}`}
+                  className="text-blue-600 hover:underline text-sm"
                 >
-                  View details
+                  View Details
                 </Link>
-
                 <button
                   onClick={() => removeFromCart(car._id)}
-                  className="text-red-500 hover:underline"
+                  className="text-red-500 hover:underline text-sm"
                 >
                   Remove
                 </button>
@@ -144,32 +158,20 @@ const total = carData.reduce((sum, car) => sum + (Number(car.price) || 0), 0);
         ))}
       </div>
 
-      {/* Right side: Cart Summary */}
-      <div className="sticky top-20 h-fit border rounded-2xl p-6 bg-gray-50 shadow-md space-y-4">
-        <h2 className="text-xl font-semibold mb-4">
-          Cart Summary ({carData.length} {carData.length === 1 ? "item" : "items"})
-        </h2>
-
-        <ul className="divide-y">
-          {carData.map((car, index) => (
-            <li key={car._id} className="py-2 flex justify-between text-sm">
-              <span>{index + 1}. {car.title}</span>
-              <span>${car.price.toLocaleString()}</span>
-            </li>
-          ))}
-        </ul>
-
-        <hr className="my-4" />
-
-        <div className="flex justify-between text-lg font-bold">
-          <span>Total</span>
+      {/* Total & Checkout */}
+      <div className="mt-10 border-t pt-6">
+        <div className="flex justify-between text-xl font-semibold mb-4">
+          <span>Total:</span>
           <span>${total.toLocaleString()}</span>
         </div>
 
         <Link href={`/checkout?total=${total}`}>
- <button   className="w-full inline-block text-center bg-blue-600 text-white py-2 rounded-xl mt-4 hover:bg-blue-700 transition"
-        >
-          Proceed to Checkout</button></Link>
+          <button
+            className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition w-full"
+          >
+            Proceed to Checkout
+          </button>
+        </Link>
       </div>
     </div>
   );

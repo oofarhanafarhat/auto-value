@@ -20,7 +20,7 @@ const categories = [
 export default function CarCategories() {
   return (
     // ✅ Section wrapper with padding and background color
-    <section className="bg-white py-20">
+    <section className="bg-gradient-to-br from-[#f8f9fa] via-white to-[#f8f9fa] py-20">
       {/* ✅ Container to center content */}
       <div className="max-w-7xl mx-auto px-4">
         

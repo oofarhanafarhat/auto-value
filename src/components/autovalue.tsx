@@ -53,7 +53,7 @@ export default function FeaturedListings() {
   const featuredCars = allCars.slice(0, 5);
 
   return (
-    <section className="bg-[#F9FAFB] py-16 shadow-xl">
+    <section className="bg-gradient-to-br from-[#f8f9fa] via-white to-[#f8f9fa] py-16 shadow-xl">
       <div className="max-w-7xl mx-auto px-4  hover:translate-y-5 ">
         {/* ✅ Section header */}
         <div className="flex justify-between items-center mb-10">

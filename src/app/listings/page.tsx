@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation"; // For redirecting
 import { useAuth } from "@clerk/nextjs"; // Clerk authentication
 import { ArrowRight } from 'lucide-react';
 
-interface Car{
+interface Car {
   _id: string;
   name: string;
   slug: { current: string };
@@ -33,12 +33,14 @@ const fetchAllCars = async (): Promise<Car[]> => {
       year,
       fuel
     }`
-  
+
   return await client.fetch(query);
 };
 
+// Removed duplicate or unnecessary PageProps interface/type definition if present
+
 export default function ListingsPage() {
- const [cars, setCars] = useState<Car[]>([]); // State to store fetched cars
+  const [cars, setCars] = useState<Car[]>([]); // State to store fetched cars
   const { userId } = useAuth(); // Get current user id
   const router = useRouter(); // Router instance
 
@@ -71,75 +73,64 @@ export default function ListingsPage() {
   };
 
   return (
-    <section className="p-6 max-w-7xl mx-auto">
-      {/* Page Heading */}
-      <h1 className="text-4xl font-bold text-center text-[#0C2340] mb-12">
-        Explore Available Cars
-      </h1>
- <div className="grid grid-cols-1 md:grid-cols-3  lg:girds-cols-3 gap-10">
-          {cars.map((car) => (
-            <div
-              key={car._id}
-              className="flex flex-col md:flex-row items-start "
-            >
-              {/* Left - Car Image (no background, sharp corners) */}
-              <div className="relative z-10 w-full md:w-[330px] h-[200px] -mr-6 md:-mr-16 md:-mb-1 mt-16 pl-28">
-                 <Image
-                  src={urlFor(car.image).url()}
-              
-                  alt={car.name}
-                  fill
-                  className="object-cover pt-8 "
-                />
-              </div>
+    <section className="p-6 max-w-6xl mx-auto bg-gradient-to-br from-[#f8f9fa] via-white to-[#f8f9fa]">
+  <h1 className="text-4xl font-bold text-center text-[#0C2340] mb-12">
+    Explore Available Cars
+  </h1>
 
-              {/* Right - White Card with Details */}
-              <div className="bg-white rounded-3xl shadow-lg p-6 w-full md:w-[700px] text-end flex flex-col justify-between">
-                <div>
-                  <h3 className="text-2xl font-bold text-[#0C2340] text-start">
-                    {car.name}
-                  </h3>
-                  <p className="text-gray-500 text-sm mb-4 text-start">Used</p>
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    {cars.map((car) => (
+      <div
+        key={car._id}
+        className="rounded-2xl overflow-hidden flex flex-col transition-transform hover:-translate-y-2 hover:shadow-2xl bg-gradient-to-br from-white via-gray-50 to-gray-100 duration-300"
+      >
+        {/* Image */}
+        <div className="relative w-full h-48">
+          <Image
+            src={urlFor(car.image).url()}
+            alt={car.name}
+            fill
+            className="object-cover transition-opacity duration-300 hover:opacity-90"
+          />
+        </div>
 
-                  <div className="space-y-2 text-sm text-gray-700">
-                    <p>
-                      <span className="font-semibold text-gray-600">
-                        Model Year:
-                      </span>{' '}
-                      {car.year}
-                    </p>
-                    <p>
-                      <span className="font-semibold text-gray-600">
-                        Model:
-                      </span>{' '}
-                      LC76
-                    </p>
-                    <p>
-                      <span className="font-semibold text-gray-600">Fuel:</span>{' '}
-                      {car.fuel}
-                    </p>
-                  </div>
-                </div>
+        {/* Content */}
+        <div className="p-5 flex flex-col flex-grow justify-between">
+          <div>
+            <h3 className="text-xl font-bold text-gray-800">{car.name}</h3>
+            <p className="text-gray-500 text-sm mb-4">Used</p>
 
-                <div className="mt-6">
-                  <p className="text-3xl font-bold text-[#0C2340] mb-4">
-                    $ {car.price}
-                  </p>
-
-                
-                  {/* // href={`/listing/${car.slug.current}`}
-                  className="inline-flex items-center justify-center  bg-[#0C2340] text-white px-6 py-3 rounded-full hover:bg-blue-900 transition text-sm font-" */}
-                {/* > */}
-                  {/* Order Now
-                  <ArrowRight className="ml-2 h-4 w-4" /> */}
-                {/* </Link> */}
-              </div>
+            <div className="text-sm text-gray-600 space-y-1">
+              <p><strong>Model Year:</strong> {car.year}</p>
+              <p><strong>Model:</strong> LC76</p>
+              <p><strong>Fuel:</strong> {car.fuel}</p>
             </div>
           </div>
-        ))}
+
+          {/* Price & Buttons */}
+          <div className="mt-6">
+            <p className="text-2xl font-semibold text-[#0C2340] mb-4">${car.price}</p>
+
+            <div className="flex gap-2">
+              <Link
+                href={`/listings/${car.slug.current}`}
+                className="flex-1 text-center py-2 px-4 rounded-lg text-sm font-semibold bg-gradient-to-r from-blue-600 to-blue-800 text-white hover:from-blue-700 hover:to-blue-900 transition duration-300"
+              >
+                View Details
+              </Link>
+              <button
+                onClick={() => handleAddToCart(car._id)}
+                className="flex-1 text-center py-2 px-4 rounded-lg text-sm font-semibold bg-gradient-to-r from-green-500 to-green-700 text-white hover:from-green-600 hover:to-green-800 transition duration-300"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="mt-12 text-center">
-      </div>
-    </section>
+    ))}
+  </div>
+</section>
+
   );
 }

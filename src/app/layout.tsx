@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import './globals.css';
 import Navbar from '../components/Navbar';
 import Footer from '@/components/Footer';
+import { CartProvider } from '@/context/CartContext';
 
 export const metadata = {
   title: 'auto value',
@@ -18,6 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
+       <CartProvider>
       <html lang="en">
         <body>
           <Navbar />
@@ -25,6 +27,7 @@ export default function RootLayout({
           <Footer/>
         </body>
       </html>
+      </CartProvider>
     </ClerkProvider>
   );
 }

@@ -50,7 +50,7 @@ const UsedCar = () => {
 
   return (
     <motion.section
-      className="px-4 md:px-20 py-16 bg-[#EAEBF0] text-[#666872] "
+      className="px-4 md:px-20 py-16 bg-gradient-to-br from-[#f8f9fa] via-white to-[#f8f9fa] text-[#666872] "
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

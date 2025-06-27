@@ -25,7 +25,7 @@ const test = [
 
 export default function Customer() {
   return (
-    <section className=" bg-[#F7F7F9] pt-16">
+    <section className="bg-gradient-to-br from-[#f8f9fa] via-white to-[#f8f9fa] pt-16">
       <div className="max-w-7xl mx-auto px-4 text-center">
         <h2 className="text-3xl sm:text-2xl font-normal text-[#100E34]  text-center mb-10">
           Our Coustomer feedback

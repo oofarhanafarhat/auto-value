@@ -19,7 +19,7 @@ const brands = [
 export default function BrandsSection() {
   return (
     // ✅ Section background and padding
-    <section className="bg-[#F8F8F8] py-16">
+    <section className="bg-gradient-to-br from-[#f8f9fa] via-white to-[#f8f9fa] py-16">
       <div className="max-w-7xl mx-auto px-4">
       <h2 className="text-3xl lg:text-2xl font-light text-[#100E34] text-center py-10  ">
             Brands

@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export default function Hero2(){
   return (
-    <section className="relative w-full bg-[#F8F8F8] py-16 px-4">
+    <section className="relative w-full bg-gradient-to-br from-[#f8f9fa] via-white to-[#f8f9fa] py-16 px-4">
       {/* Main Hero Layout */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10 relative">
         {/* Left Text */}
