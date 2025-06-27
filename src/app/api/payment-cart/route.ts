@@ -14,12 +14,12 @@ export async function POST(req: NextRequest) {
     console.log("💰 Received amount in API:", amount);
 
     if (!amount || isNaN(amount) || amount <= 0) {
-      console.warn("❌ Invalid amount:", amount);
+    
       return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
     }
 
     if (amount > 999999.99) {
-      console.warn("❌ Amount too large:", amount);
+    
       return NextResponse.json(
         { error: 'Amount must be no more than $999,999.99' },
         { status: 400 }

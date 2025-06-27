@@ -56,8 +56,8 @@ export default async function CarDetailPage({ params }: Props) {
             )}
           </div>
 
-       <Link href={"/cart"}>   <button className="mt-4 px-6 py-3 bg-[#0C2340] text-white rounded-full hover:bg-blue-900 transition">
-            Add to Cart
+       <Link href={"/listings"}>   <button className="mt-4 px-6 py-3 bg-[#0C2340] text-white rounded-full hover:bg-blue-900 transition">
+            back to listings
           </button></Link>
         </div>
       </div>
