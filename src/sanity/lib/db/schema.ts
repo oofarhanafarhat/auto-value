@@ -1,6 +1,6 @@
 
 
-import { pgTable, serial, text, integer, timestamp,uuid } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, integer, timestamp, uuid } from 'drizzle-orm/pg-core';
 
 export const cart = pgTable("cart", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -8,13 +8,7 @@ export const cart = pgTable("cart", {
   userId: text("user_id").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
-
-
-
-
-
-
-// Cars Table: Store user-submitted car details with estimated value
+//Cars Table: Store user-submitted car details with estimated value
 export const auto = pgTable('auto', {
   id: serial('id').primaryKey(),                       // Auto-increment ID
   title: text('title').notNull(),                      // Car listing title
@@ -24,9 +18,18 @@ export const auto = pgTable('auto', {
   condition: text('condition').notNull(),              // Car condition (New, Used, etc.)
   mileage: integer('mileage'),                         // Mileage in KM
   price: integer('price').notNull(),                   // Price in PKR
-  description: text('description'),                    // Description of the car
+  description: text('description'),
+  userId: text('user_id').notNull(),         // ✅ New line
+  dealerCode: text('dealer_code').notNull(),
+  source: text("source").notNull().default("visit"),                  // Description of the car
   estimatedPrice: integer('estimated_price').notNull(),
   createdAt: timestamp('created_at', {                 // Timestamp for records
     withTimezone: true
   }).defaultNow(),
+});
+
+export const dealers = pgTable("dealers", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: text("user_id").notNull().unique(),
+  dealerCode: text("dealer_code").notNull().unique(),
 });
