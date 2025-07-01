@@ -29,7 +29,7 @@ export default function UserDashboard() {
           </h2>
 
           {data.cars.length === 0 ? (
-            <p className="text-gray-400">You haven't listed any cars yet.</p>
+            <p className="text-gray-400">You haven t listed any cars yet.</p>
           ) : (
             <ul className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
               {data.cars.map((car) => (
@@ -80,3 +80,4 @@ export default function UserDashboard() {
     </div>
   );
 }
+

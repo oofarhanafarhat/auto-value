@@ -9,7 +9,7 @@ export default function SuccessPage() {
   useEffect(() => {
     setCartCount(0); // 🎯 Sirf frontend cart badge clear kar raha
     alert("🎉 Payment successful! Thank you for shopping.");
-  }, []);
+  }, [setCartCount]);
 
   return (
     <div className="p-6 text-center">
