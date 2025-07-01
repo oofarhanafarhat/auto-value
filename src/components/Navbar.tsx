@@ -32,8 +32,8 @@ const Navbar = () => {
 
         {/* Right Links */}
         <ul className="flex space-x-6 text-[#666872] font-medium">
-        <Link href={"/dealer-dashboard"}>  <li className="hover:text-[#A2001D] cursor-pointer">D-Dashborad</li></Link>
-        <Link href={"/user-dashboard"}> <li className="hover:text-[#A2001D] cursor-pointer">U-Dashboard</li></Link> 
+        <Link href={"/dealer-dashboard"}>  <li className="hover:text-[#A2001D] cursor-pointer">Dealer-Dashborad</li></Link>
+        <Link href={"/user-dashboard"}> <li className="hover:text-[#A2001D] cursor-pointer">User-Dashboard</li></Link> 
           <Link href="/sign-in" className="hover:text-[#A2001D]">Sign In</Link>
           <Link href="/cart" className="relative">
             <FiShoppingCart size={22} />
@@ -75,8 +75,8 @@ const Navbar = () => {
           </div>
           <hr className="my-2" />
           <div className="flex flex-col space-y-1">
-          <Link href={"/dealer-dashboard"}> <span className="hover:text-[#A2001D]">D-Dashborad</span></Link> 
-           <Link href={"/user-dashboard"}> <span className="hover:text-[#A2001D]">U-Dashboard</span></Link>
+          <Link href={"/dealer-dashboard"}> <span className="hover:text-[#A2001D]">Dealer-Dashborad</span></Link> 
+           <Link href={"/user-dashboard"}> <span className="hover:text-[#A2001D]">User-Dashboard</span></Link>
             <Link href="/sign-in" className="hover:text-[#A2001D]">Sign In</Link>
             <Link href="/cart" className="relative">
               <FiShoppingCart size={22} />
