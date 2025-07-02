@@ -80,7 +80,20 @@ export default function HeroWithEstimator() {
       </div>
 
       {/* Estimator Section */}
-      <div className="mt-16 max-w-5xl mx-auto bg-white p-6 md:p-8 rounded-3xl shadow-xl">
+      {/* Estimator Section with Heading */}
+      <div className="mt-24 mb-10 text-center">
+   <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#0f172a] via-[#161a25] to-[#b91c1c] drop-shadow-md">
+  Get Your Car Estimated Value
+</h2>
+
+
+        <p className="text-gray-600 mt-2 text-sm sm:text-base">
+          Enter your car details below to get an instant valuation
+        </p>
+      </div>
+
+      <div className="max-w-5xl mx-auto bg-white p-6 md:p-8 rounded-3xl shadow-xl">
+
         <div className="flex flex-wrap justify-center gap-4 mb-4">
           <select
             value={condition}
